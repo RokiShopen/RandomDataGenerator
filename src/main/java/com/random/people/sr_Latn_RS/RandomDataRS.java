@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author sasa - sasa@novomaticls.com on 3/28/2016.
+ * @author sasa - marinkovic.aleksandarr@gmail.com on 3/28/2016.
  */
 public class RandomDataRS implements RandomData
 {
