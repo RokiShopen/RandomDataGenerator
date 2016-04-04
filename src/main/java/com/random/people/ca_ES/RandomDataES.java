@@ -1,14 +1,18 @@
+/**
+ *
+ */
 package com.random.people.ca_ES;
 
 import com.random.people.RandomData;
-
 import java.util.Currency;
 import java.util.Date;
 
 /**
- * @author sasa - marinkovic.aleksandarr@gmail.com on 4/2/2016
+ * @author Sasa - marinkovic.aleksandarr@gmail.com on 4/2/2016
+ * @version
+ * @since
  */
-public class RandomDataES implements RandomData{
+public final class RandomDataES implements RandomData {
     @Override
     public String namePrefix() {
         return null;
