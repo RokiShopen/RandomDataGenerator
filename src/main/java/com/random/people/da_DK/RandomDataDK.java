@@ -1,14 +1,15 @@
 package com.random.people.da_DK;
 
 import com.random.people.RandomData;
-
 import java.util.Currency;
 import java.util.Date;
 
 /**
  * @author sasa - marinkovic.aleksandarr@gmail.com on 4/2/2016
+ * @version
+ * @since
  */
-public class RandomDataDK implements RandomData{
+public final class RandomDataDK implements RandomData {
     @Override
     public String namePrefix() {
         return null;
