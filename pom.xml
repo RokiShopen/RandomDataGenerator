@@ -21,11 +21,18 @@
             <email>TheJavaGuy@yandex.com</email>
         </developer>
     </developers>
-
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/RokiShopen/RandomDataGenerator/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:git@github.com:RokiShopen/RandomDataGenerator.git</connection>
+        <developerConnection>scm:git:git@github.com:RokiShopen/RandomDataGenerator.git</developerConnection>
+        <url>https://github.com/RokiShopen/RandomDataGenerator</url>
+    </scm>
     <prerequisites>
         <maven>3.0.4</maven>
     </prerequisites>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -36,7 +43,6 @@
         <junit.version>4.12</junit.version>
         <jmock.version>2.8.1</jmock.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -51,7 +57,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
