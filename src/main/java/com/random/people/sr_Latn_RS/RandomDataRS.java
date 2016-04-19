@@ -1,7 +1,21 @@
 /**
+ * This file is part of Random data generator.
  *
+ * Random data generator is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Random data generator is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Random data generator.
+ * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people.sr_Latn_RS;
+package com.random.people.sr_latn_rs;
 
 import com.random.people.RandomData;
 import java.io.BufferedReader;
@@ -13,32 +27,58 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author Sasa - marinkovic.aleksandarr@gmail.com on 3/28/2016.
- * @version
- * @since
+ * Rs class.
+ * @author Aleksandar Marinkovic (marinkovic.aleksandarr@gmail.com)
+ * @version $Id$
+ * @since 0.0.1
  */
-public final class RandomDataRS implements RandomData {
+public final class RandomDataRs implements RandomData {
     /**
-     * Temporary main method for spiking purposes
+     * Temporary main method for spiking purposes.
      * @param args Program arguments
      * @throws IOException If there is a problem with resource file
      */
     public static void main(final String[] args) throws IOException {
         final Locale locale = new Locale("sr", "RS", "Latn");
-        System.out.println(String.format("Name of Locale: %s", locale.getDisplayName()));
-        System.out.println(String.format("Language Code: %s, Language Display Name: %s", locale.getLanguage(), locale.getDisplayLanguage()));
-        System.out.println(String.format("Country Code: %s, Country Display Name: %s", locale.getCountry(), locale.getDisplayCountry()));
+        System.out.println(
+            String.format("Name of Locale: %s", locale.getDisplayName())
+        );
+        System.out.println(
+            String.format(
+                "Language Code: %s, Language Display Name: %s",
+                locale.getLanguage(), locale.getDisplayLanguage()
+            )
+        );
+        System.out.println(
+            String.format(
+                "Country Code: %s, Country Display Name: %s",
+                locale.getCountry(), locale.getDisplayCountry()
+            )
+        );
         if (!locale.getScript().equals("")) {
-            System.out.println(String.format("Script Code: %s, Script Display Name: %s", locale.getScript(), locale.getDisplayScript()));
+            System.out.println(
+                String.format(
+                    "Script Code: %s, Script Display Name: %s",
+                    locale.getScript(), locale.getDisplayScript()
+                )
+            );
         }
         if (!locale.getVariant().equals("")) {
-            System.out.println(String.format("Variant Code: %s, Variant Display Name: %s", locale.getVariant(), locale.getDisplayVariant()));
+            System.out.println(
+                String.format(
+                    "Variant Code: %s, Variant Display Name: %s",
+                    locale.getVariant(), locale.getDisplayVariant()
+                )
+            );
         }
-        final ClassLoader classloader = RandomDataRS.class.getClassLoader();
-        final File file = new File(classloader.getResource("sr_Latn_RS/firstNameFemale.txt").getFile());
-        final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        final File file = new File(
+            Thread.currentThread()
+                .getContextClassLoader()
+                .getResource("sr_Latn_RS/firstNameFemale.txt").getFile()
+        );
+        final BufferedReader reader = new BufferedReader(new FileReader(file));
         for (;;) {
-            final String line = bufferedReader.readLine();
+            final String line = reader.readLine();
             if (line == null) {
                 break;
             }
