@@ -152,6 +152,9 @@
                         </goals>
                         <configuration>
                             <failOnViolation>true</failOnViolation>
+                            <excludes>
+                                <exclude>pmd:/src/main/java/.*</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
