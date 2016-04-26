@@ -13,7 +13,7 @@
         <developer>
             <id>1</id>
             <name>Aleksandar Marinković</name>
-            <email>aleksandar.marinkovic@gmail.com</email>
+            <email>marinkovic.aleksandarr@gmail.com</email>
         </developer>
         <developer>
             <id>2</id>
@@ -31,7 +31,7 @@
         <url>https://github.com/RokiShopen/RandomDataGenerator</url>
     </scm>
     <prerequisites>
-        <maven>3.0.4</maven>
+        <maven>3.3.1</maven>
     </prerequisites>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -152,6 +152,9 @@
                         </goals>
                         <configuration>
                             <failOnViolation>true</failOnViolation>
+                            <excludes>
+                                <exclude>pmd:/src/main/java/.*</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
