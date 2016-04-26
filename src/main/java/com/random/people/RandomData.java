@@ -1,5 +1,19 @@
 /**
+ * This file is part of Random data generator.
  *
+ * Random data generator is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Random data generator is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Random data generator.
+ * If not, see <http://www.gnu.org/licenses/>.
  */
 package com.random.people;
 
@@ -7,86 +21,87 @@ import java.util.Currency;
 import java.util.Date;
 
 /**
- * @author Sasa - marinkovic.aleksandarr@gmail.com on 3/28/2016.
- * @version
- * @since
+ * Rs class.
+ * @author Aleksandar Marinkovic (marinkovic.aleksandarr@gmail.com)
+ * @version $Id$
+ * @since 0.0.1
  */
 public interface RandomData {
     /**
-     *
-     * @return
+     * Comment.
+     * @return Name prefix
      */
     String namePrefix();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return First name
      */
     String firstName();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Last name
      */
     String lastName();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Ssn
      */
     String ssn();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Gender
      */
     String gender();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Date of birth
      */
     Date dateOfBirth();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Address
      */
     String address();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return City
      */
     String city();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return State
      */
     String state();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Country
      */
     String country();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Phone number
      */
     String phoneNumber();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Nationality
      */
     String nationality();
 
     /**
-     *
-     * @return
+     * Comment.
+     * @return Currency
      */
     Currency currency();
 }
