@@ -40,6 +40,7 @@ public final class RandomDataRs implements RandomData {
      */
     public static void main(final String[] args) throws IOException {
         final Locale locale = new Locale("sr", "RS", "Latn");
+//        final Locale locale = new Locale("ca", "es");
         System.out.println(
             String.format("Name of Locale: %s", locale.getDisplayName())
         );
