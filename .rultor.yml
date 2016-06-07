@@ -6,4 +6,6 @@ release:
   script: |
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    mvn clean deploy -Pjcabi --settings /home/r/settings.xml
+    ls -alF
+    cat settings.xml
+    mvn clean deploy -PRandomDataGenerator --settings /home/r/settings.xml
