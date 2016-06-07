@@ -6,6 +6,6 @@ release:
   script: |
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    ls -alF
-    cat settings.xml
+    ls -alF /home/r
+    cd /home/r && cat settings.xml
     mvn clean deploy -PRandomDataGenerator --settings /home/r/settings.xml
