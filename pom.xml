@@ -8,17 +8,28 @@
     <packaging>jar</packaging>
     <name>RandomDataGenerator</name>
     <description>Generates various kinds of random data, for example names, addresses, phone numbers, dates, personal ids, email addresses, bank account numbers etc.</description>
+    <url>https://github.com/RokiShopen/RandomDataGenerator</url>
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.en.html</url>
+        </license>
+    </licenses>
     <inceptionYear>2016</inceptionYear>
     <developers>
         <developer>
             <id>1</id>
             <name>Aleksandar Marinković</name>
             <email>marinkovic.aleksandarr@gmail.com</email>
+            <organization>RokiShopen</organization>
+            <organizationUrl>https://github.com/RokiShopen</organizationUrl>
         </developer>
         <developer>
             <id>2</id>
             <name>Ivan Milosavljević</name>
             <email>TheJavaGuy@yandex.com</email>
+            <organization>TheJavaGuy</organization>
+            <organizationUrl>http://thejavaguy.org</organizationUrl>
         </developer>
     </developers>
     <issueManagement>
@@ -159,6 +170,54 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>oss.sonatype.org</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <description>${project.version}</description>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy-to-sonatype</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                            <goal>release</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <reporting>
@@ -188,4 +247,14 @@
             </plugin>
         </plugins>
     </reporting>
+    <distributionManagement>
+        <repository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
