@@ -20,8 +20,12 @@ package com.random.people.sr_latn_rs;
 import com.random.people.RandomData;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
@@ -76,13 +80,16 @@ public final class RandomDataRs implements RandomData {
                 .getContextClassLoader()
                 .getResource("sr_Latn_RS/firstNameFemale.txt").getFile()
         );
-        final BufferedReader reader = new BufferedReader(new FileReader(file));
-        for (;;) {
-            final String line = reader.readLine();
-            if (line == null) {
-                break;
+        try (InputStream in = new FileInputStream(file);
+            Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(rdr)) {
+            for (;;) {
+                final String line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+                System.out.println(line);
             }
-            System.out.println(line);
         }
     }
 
