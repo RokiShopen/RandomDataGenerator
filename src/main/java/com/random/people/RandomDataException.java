@@ -15,46 +15,21 @@
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people.datafile;
-
-import java.io.File;
+package com.random.people;
 
 /**
- * Default implementation of DataFile with uncached content.
+ * Application exception for RandomData app.
  * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  * @version $Id$
  * @since 0.0.1
  */
-public final class DefaultDataFile implements DataFile {
-    /**
-     * Underlying file with data.
-     */
-    private final File origin;
-
-    /**
-     * Secondary constructor.
-     * @param name Name of the file
-     */
-    public DefaultDataFile(final Name name) {
-        this(
-            new File(
-                Thread.currentThread()
-                    .getContextClassLoader()
-                    .getResource(name.name()).getFile()
-                )
-        );
-    }
-
+public final class RandomDataException extends Exception {
     /**
      * Primary constructor.
-     * @param origin Wrapped file
+     * @param message Detailed exception message
+     * @param cause Root cause
      */
-    public DefaultDataFile(final File origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public String randomLine() {
-        throw new UnsupportedOperationException();
+    public RandomDataException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }
