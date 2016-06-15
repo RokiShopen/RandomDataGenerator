@@ -18,10 +18,10 @@
 package com.random.people.sr_latn_rs;
 
 import com.random.people.RandomData;
+import com.random.people.datafile.CachedDataFile;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -40,11 +40,10 @@ public final class RandomDataRs implements RandomData {
     /**
      * Temporary main method for spiking purposes.
      * @param args Program arguments
-     * @throws IOException If there is a problem with resource file
+     * @throws Exception If there is a problem with resource file
      */
-    public static void main(final String[] args) throws IOException {
+    public static void main(final String[] args) throws Exception {
         final Locale locale = new Locale("sr", "RS", "Latn");
-//        final Locale locale = new Locale("ca", "es");
         System.out.println(
             String.format("Name of Locale: %s", locale.getDisplayName())
         );
@@ -92,6 +91,7 @@ public final class RandomDataRs implements RandomData {
                 System.out.println(line);
             }
         }
+        System.out.println(new CachedDataFile(file).randomLine());
     }
 
     @Override

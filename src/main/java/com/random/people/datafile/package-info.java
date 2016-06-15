@@ -16,21 +16,3 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 package com.random.people.datafile;
-
-import com.random.people.RandomDataException;
-
-/**
- * Interface for DataFiles.
- * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
- * @version $Id$
- * @since 0.0.1
- */
-public interface DataFile {
-    /**
-     * Returns random line from file.
-     * @return Random line from file
-     * @throws RandomDataException if there is some problem while working with
-     *  file
-     */
-    String randomLine() throws RandomDataException;
-}
