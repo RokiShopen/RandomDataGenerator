@@ -17,7 +17,19 @@
  */
 package com.random.people.datafile;
 
+import com.random.people.RandomDataException;
+import org.thejavaguy.prng.generators.PRNG;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Default implementation of DataFile with uncached content.
@@ -30,18 +42,22 @@ public final class DefaultDataFile implements DataFile {
      * Underlying file with data.
      */
     private final File origin;
+    /**
+     * Random generator needed for obtaining random lines from file.
+     */
+    private final PRNG randomGenerator;
 
     /**
      * Secondary constructor.
      * @param name Name of the file
      */
-    public DefaultDataFile(final Name name) {
+    public DefaultDataFile(final Name name, final PRNG randomGenerator) {
         this(
             new File(
                 Thread.currentThread()
                     .getContextClassLoader()
                     .getResource(name.name()).getFile()
-                )
+                ), randomGenerator
         );
     }
 
@@ -49,12 +65,41 @@ public final class DefaultDataFile implements DataFile {
      * Primary constructor.
      * @param origin Wrapped file
      */
-    public DefaultDataFile(final File origin) {
+    public DefaultDataFile(final File origin, final PRNG randomGenerator) {
         this.origin = origin;
+        this.randomGenerator = randomGenerator;
     }
 
     @Override
-    public String randomLine() {
-        throw new UnsupportedOperationException();
+    public String randomLine() throws RandomDataException {
+        final List<String> lines = new ArrayList<>();
+        try (InputStream in = new FileInputStream(this.origin);
+             Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(rdr)) {
+             for (;;) {
+                final String line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+                lines.add(line);
+            }
+        } catch (final IOException ex) {
+            throw new RandomDataException(errorMessage(ex), ex);
+        }
+        final int lineIndex = randomGenerator.nextInt(0, lines.size() - 1);
+        return lines.get(lineIndex);
+    }
+
+    /**
+     * Creates error message for given exception.
+     * @param exc Exception to create error message for
+     * @return Error message
+     */
+    private static String errorMessage(final Exception exc) {
+        final StringBuilder ret = new StringBuilder();
+        ret.append("Problem while opening or reading data file. ");
+        ret.append("Underlying cause: ");
+        ret.append(exc.getMessage());
+        return ret.toString();
     }
 }
