@@ -18,6 +18,12 @@
 package com.random.people.sr_latn_rs;
 
 import com.random.people.RandomData;
+import com.random.people.RandomDataException;
+import com.random.people.datafile.CachedDataFile;
+import com.random.people.datafile.DataFile;
+import org.thejavaguy.prng.generators.PRNG;
+import org.thejavaguy.prng.generators.R250;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,12 +36,29 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Rs class.
+ * Random data for Serbian language.
  * @author Aleksandar Marinkovic (marinkovic.aleksandarr@gmail.com)
  * @version $Id$
  * @since 0.0.1
  */
 public final class RandomDataRs implements RandomData {
+    private final DataFile maleNames;
+    private final DataFile femaleNames;
+    private final DataFile lastNames;
+    private final DataFile namePrefixes;
+    private final DataFile cities;
+    private final PRNG randomGenerator;
+
+    public RandomDataRs(DataFile maleNames, DataFile femaleNames, DataFile lastNames, DataFile namePrefixes, DataFile cities, PRNG randomGenerator)
+    {
+        this.maleNames = maleNames;
+        this.femaleNames = femaleNames;
+        this.lastNames = lastNames;
+        this.namePrefixes = namePrefixes;
+        this.cities = cities;
+        this.randomGenerator = randomGenerator;
+    }
+
     /**
      * Temporary main method for spiking purposes.
      * @param args Program arguments
@@ -90,11 +113,12 @@ public final class RandomDataRs implements RandomData {
                 System.out.println(line);
             }
         }
+        System.out.println(new CachedDataFile(file, new R250()).randomLine());
     }
 
     @Override
-    public String namePrefix() {
-        return null;
+    public String namePrefix() throws RandomDataException {
+        return namePrefixes.randomLine();
     }
 
     @Override
@@ -114,7 +138,7 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public String gender() {
-        return null;
+        return randomGenerator.nextInt(1) == 0 ? "muški" : "ženski";
     }
 
     @Override
@@ -139,7 +163,7 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public String country() {
-        return null;
+        return "Srbija";
     }
 
     @Override
@@ -154,6 +178,22 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public Currency currency() {
-        return null;
+        return Currency.getInstance(new Locale("sr", "RS", "Latn"));
+    }
+
+    private int month() {
+        return randomGenerator.nextInt(1, 12);
+    }
+
+    private int day() {
+        return randomGenerator.nextInt(1, 31);
+    }
+
+    private int year() {
+        return randomGenerator.nextInt(1000, 3000);
+    }
+
+    private int digit() {
+        return randomGenerator.nextInt(0, 9);
     }
 }
