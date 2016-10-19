@@ -45,34 +45,68 @@
         <maven>3.3.1</maven>
     </prerequisites>
     <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.resourcesDirectory>src/main/resources</project.resourcesDirectory>
         <project.externalResourcesDirectory>src/main/resources-ext</project.externalResourcesDirectory>
         <project.libDirectory>lib</project.libDirectory>
         <mainClass></mainClass>
-        <junit.version>4.12</junit.version>
-        <jmock.version>2.8.1</jmock.version>
+        <rng.version>0.0.2</rng.version>
     </properties>
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jmock</groupId>
-            <artifactId>jmock-junit4</artifactId>
-            <version>${jmock.version}</version>
-            <scope>test</scope>
+            <groupId>org.thejavaguy</groupId>
+            <artifactId>rng</artifactId>
+            <version>${rng.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <profiles>
         <profile>
+            <id>NoQulice</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>2.10</version>
+                        <executions>
+                            <execution>
+                                <id>dep</id>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.5.1</version>
+                        <configuration>
+                            <source>1.7</source>
+                            <target>1.7</target>
+                            <encoding>UTF-8</encoding>
+                            <showDeprecation>true</showDeprecation>
+                            <showWarnings>true</showWarnings>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>RandomDataGenerator</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>2.10</version>
+                        <executions>
+                            <execution>
+                                <id>dep</id>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
@@ -152,7 +186,7 @@
                     <plugin>
                         <groupId>com.qulice</groupId>
                         <artifactId>qulice-maven-plugin</artifactId>
-                        <version>0.16.4</version>
+                        <version>1.0-SNAPSHOT</version>
                         <configuration>
                             <license>file:${basedir}/LICENSE.txt</license>
                         </configuration>
@@ -165,8 +199,9 @@
                                 </goals>
                                 <configuration>
                                     <failOnViolation>true</failOnViolation>
-                                    <excludes>
+                                    <excludes combine.children="append">
                                         <exclude>pmd:/src/main/java/.*</exclude>
+                                        <exclude>dependencies:.*</exclude>
                                     </excludes>
                                 </configuration>
                             </execution>
@@ -195,6 +230,7 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.8.2</version>
                         <configuration>
                             <skip>true</skip>
                         </configuration>
