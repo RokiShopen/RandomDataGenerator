@@ -51,12 +51,19 @@ public final class CachedDataFile implements DataFile {
     private final List<String> lines;
 
     /**
+     * RNG.
+     */
+    private final R250 rng;
+
+    /**
      * Primary constructor.
      * @param origin Wrapped DataFile
+     * @param rng Generator
      */
-    public CachedDataFile(final File origin) {
+    public CachedDataFile(final File origin, final R250 rng) {
         this.origin = origin;
         this.lines = new ArrayList<>(NUM_LINES);
+        this.rng = rng;
     }
 
     @Override
@@ -76,8 +83,7 @@ public final class CachedDataFile implements DataFile {
                 throw new RandomDataException(errorMessage(ex), ex);
             }
         }
-        final R250 rng = new R250();
-        final int index = rng.nextInt(0, this.lines.size() - 1);
+        final int index = this.rng.nextInt(0, this.lines.size() - 1);
         return this.lines.get(index);
     }
 

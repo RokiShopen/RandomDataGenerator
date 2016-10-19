@@ -18,7 +18,6 @@
 package com.random.people.sr_latn_rs;
 
 import com.random.people.RandomData;
-import com.random.people.datafile.CachedDataFile;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -91,7 +90,6 @@ public final class RandomDataRs implements RandomData {
                 System.out.println(line);
             }
         }
-        System.out.println(new CachedDataFile(file).randomLine());
     }
 
     @Override
