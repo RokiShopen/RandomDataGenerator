@@ -28,6 +28,8 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.thejavaguy.prng.generators.PRNG;
 import org.thejavaguy.prng.generators.R250;
 
 /**
@@ -49,21 +51,19 @@ public final class CachedDataFile implements DataFile {
      * File content.
      */
     private final List<String> lines;
-
     /**
-     * RNG.
+     * Random generator needed for obtaining random lines from file.
      */
-    private final R250 rng;
+    private final PRNG randomGenerator;
 
     /**
      * Primary constructor.
      * @param origin Wrapped DataFile
-     * @param rng Generator
      */
-    public CachedDataFile(final File origin, final R250 rng) {
+    public CachedDataFile(final File origin, final PRNG randomGenerator) {
         this.origin = origin;
         this.lines = new ArrayList<>(NUM_LINES);
-        this.rng = rng;
+        this.randomGenerator = randomGenerator;
     }
 
     @Override
@@ -83,8 +83,8 @@ public final class CachedDataFile implements DataFile {
                 throw new RandomDataException(errorMessage(ex), ex);
             }
         }
-        final int index = this.rng.nextInt(0, this.lines.size() - 1);
-        return this.lines.get(index);
+        final int lineIndex = randomGenerator.nextInt(0, this.lines.size() - 1);
+        return this.lines.get(lineIndex);
     }
 
     /**

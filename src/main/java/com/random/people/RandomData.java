@@ -31,7 +31,7 @@ public interface RandomData {
      * Comment.
      * @return Name prefix
      */
-    String namePrefix();
+    String namePrefix() throws RandomDataException;
 
     /**
      * Comment.

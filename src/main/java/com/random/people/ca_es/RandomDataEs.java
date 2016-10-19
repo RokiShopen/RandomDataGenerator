@@ -22,7 +22,7 @@ import java.util.Currency;
 import java.util.Date;
 
 /**
- * Rs class.
+ * Random data for Spanish language.
  * @author Aleksandar Marinkovic (marinkovic.aleksandarr@gmail.com)
  * @version $Id$
  * @since 0.0.1
