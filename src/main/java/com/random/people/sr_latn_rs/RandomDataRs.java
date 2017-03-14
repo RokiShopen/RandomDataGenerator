@@ -24,13 +24,7 @@ import com.random.people.datafile.DataFile;
 import org.thejavaguy.prng.generators.PRNG;
 import org.thejavaguy.prng.generators.R250;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
@@ -65,70 +59,56 @@ public final class RandomDataRs implements RandomData {
      * @throws Exception If there is a problem with resource file
      */
     public static void main(final String[] args) throws Exception {
-        final Locale locale = new Locale("sr", "RS", "Latn");
+        RandomDataRs randomDataRs = new RandomDataRs(
+          new CachedDataFile(file("sr_Latn_RS/firstNameMale.txt"), new R250()),
+            new CachedDataFile(file("sr_Latn_RS/firstNameFemale.txt"), new R250()),
+              new CachedDataFile(file("sr_Latn_RS/lastName.txt"), new R250()),
+                new CachedDataFile(file("sr_Latn_RS/namePrefix.txt"), new R250()),
+                  new CachedDataFile(file("sr_Latn_RS/cities.txt"), new R250()),
+                   new R250());
+
         System.out.println(
-            String.format("Name of Locale: %s", locale.getDisplayName())
+          randomDataRs.namePrefix()+ ", " + randomDataRs.firstName() + ", " +
+          randomDataRs.lastName()+ ", " + randomDataRs.dateOfBirth() + ", " +
+          randomDataRs.gender()+ ", " + randomDataRs.phoneNumber() + ", " +
+          randomDataRs.city()+ ", " + randomDataRs.country() + ", " +
+          randomDataRs.nationality()+ ", " + randomDataRs.currency() + " "
         );
-        System.out.println(
-            String.format(
-                "Language Code: %s, Language Display Name: %s",
-                locale.getLanguage(), locale.getDisplayLanguage()
-            )
-        );
-        System.out.println(
-            String.format(
-                "Country Code: %s, Country Display Name: %s",
-                locale.getCountry(), locale.getDisplayCountry()
-            )
-        );
-        if (!locale.getScript().equals("")) {
-            System.out.println(
-                String.format(
-                    "Script Code: %s, Script Display Name: %s",
-                    locale.getScript(), locale.getDisplayScript()
-                )
-            );
-        }
-        if (!locale.getVariant().equals("")) {
-            System.out.println(
-                String.format(
-                    "Variant Code: %s, Variant Display Name: %s",
-                    locale.getVariant(), locale.getDisplayVariant()
-                )
-            );
-        }
-        final File file = new File(
+    }
+
+    private static File file(String fileName) {
+        return new File(
             Thread.currentThread()
                 .getContextClassLoader()
-                .getResource("sr_Latn_RS/firstNameFemale.txt").getFile()
+                .getResource(fileName).getFile()
         );
-        try (InputStream in = new FileInputStream(file);
-            Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-            BufferedReader reader = new BufferedReader(rdr)) {
-            for (;;) {
-                final String line = reader.readLine();
-                if (line == null) {
-                    break;
-                }
-                System.out.println(line);
-            }
-        }
-        System.out.println(new CachedDataFile(file, new R250()).randomLine());
     }
 
     @Override
     public String namePrefix() throws RandomDataException {
-        return namePrefixes.randomLine();
+        return namePrefixes.specificLine(randomGenerator.nextInt(0, 2));
     }
 
     @Override
     public String firstName() {
-        return null;
+        try
+        {
+            return randomGenerator.nextInt(1) == 0 ? maleNames.randomLine() : femaleNames.randomLine();
+        } catch (RandomDataException e)
+        {
+            return null;
+        }
     }
 
     @Override
     public String lastName() {
-        return null;
+        try
+        {
+            return lastNames.randomLine();
+        } catch (RandomDataException e)
+        {
+            return null;
+        }
     }
 
     @Override
@@ -143,7 +123,7 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public Date dateOfBirth() {
-        return null;
+        return new Date();
     }
 
     @Override
@@ -153,7 +133,13 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public String city() {
-        return null;
+        try
+        {
+            return cities.randomLine();
+        } catch (RandomDataException e)
+        {
+            return null;
+        }
     }
 
     @Override
@@ -168,12 +154,12 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public String phoneNumber() {
-        return null;
+        return "+381" + randomGenerator.nextInt(1000000, 9999999);
     }
 
     @Override
     public String nationality() {
-        return null;
+        return "Srpska";
     }
 
     @Override

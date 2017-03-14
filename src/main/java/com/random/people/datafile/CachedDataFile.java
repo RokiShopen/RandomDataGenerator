@@ -68,10 +68,24 @@ public final class CachedDataFile implements DataFile {
 
     @Override
     public String randomLine() throws RandomDataException {
+        readLines();
+        final int lineIndex = randomGenerator.nextInt(0, this.lines.size() - 1);
+        return this.lines.get(lineIndex);
+    }
+
+    @Override
+    public String specificLine(int lineIndex) throws RandomDataException
+    {
+        readLines();
+        return this.lines.get(lineIndex);
+    }
+
+    private void readLines() throws RandomDataException
+    {
         if (this.lines.isEmpty()) {
             try (InputStream in = new FileInputStream(this.origin);
-                Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-                BufferedReader reader = new BufferedReader(rdr)) {
+                 Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+                 BufferedReader reader = new BufferedReader(rdr)) {
                 for (;;) {
                     final String line = reader.readLine();
                     if (line == null) {
@@ -83,8 +97,6 @@ public final class CachedDataFile implements DataFile {
                 throw new RandomDataException(errorMessage(ex), ex);
             }
         }
-        final int lineIndex = randomGenerator.nextInt(0, this.lines.size() - 1);
-        return this.lines.get(lineIndex);
     }
 
     /**

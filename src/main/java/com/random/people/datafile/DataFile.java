@@ -33,4 +33,11 @@ public interface DataFile {
      *  file
      */
     String randomLine() throws RandomDataException;
+    /**
+     * Returns specific line from file.
+     * @return specific line from file
+     * @throws RandomDataException if there is some problem while working with
+     *  file
+     */
+    String specificLine(int lineIndex) throws RandomDataException;
 }

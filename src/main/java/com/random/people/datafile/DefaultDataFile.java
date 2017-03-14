@@ -90,6 +90,26 @@ public final class DefaultDataFile implements DataFile {
         return lines.get(lineIndex);
     }
 
+    @Override
+    public String specificLine(int lineIndex) throws RandomDataException
+    {
+        final List<String> lines = new ArrayList<>();
+        try (InputStream in = new FileInputStream(this.origin);
+             Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(rdr)) {
+            for (;;) {
+                final String line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+                lines.add(line);
+            }
+        } catch (final IOException ex) {
+            throw new RandomDataException(errorMessage(ex), ex);
+        }
+        return lines.get(lineIndex);
+    }
+
     /**
      * Creates error message for given exception.
      * @param exc Exception to create error message for
