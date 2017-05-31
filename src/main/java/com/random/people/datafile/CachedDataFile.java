@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.thejavaguy.prng.generators.PRNG;
-import org.thejavaguy.prng.generators.R250;
 
 /**
  * DataFile with cached content.
@@ -54,13 +53,13 @@ public final class CachedDataFile implements DataFile {
     /**
      * Random generator needed for obtaining random lines from file.
      */
-    private final PRNG randomGenerator;
+    private final PRNG.Smart randomGenerator;
 
     /**
      * Primary constructor.
      * @param origin Wrapped DataFile
      */
-    public CachedDataFile(final File origin, final PRNG randomGenerator) {
+    public CachedDataFile(final File origin, final PRNG.Smart randomGenerator) {
         this.origin = origin;
         this.lines = new ArrayList<>(NUM_LINES);
         this.randomGenerator = randomGenerator;

@@ -1,16 +1,16 @@
 /**
  * This file is part of Random data generator.
- *
+ * <p>
  * Random data generator is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Random data generator is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
@@ -21,12 +21,13 @@ import com.random.people.RandomData;
 import com.random.people.RandomDataException;
 import com.random.people.datafile.CachedDataFile;
 import com.random.people.datafile.DataFile;
+import com.random.people.datafile.Name;
 import org.thejavaguy.prng.generators.PRNG;
-import org.thejavaguy.prng.generators.R250;
+import org.thejavaguy.prng.generators.R250_521;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -36,15 +37,15 @@ import java.util.Locale;
  * @since 0.0.1
  */
 public final class RandomDataRs implements RandomData {
+    private static final Locale locale = new Locale("sr", "RS", "Latn");
     private final DataFile maleNames;
     private final DataFile femaleNames;
     private final DataFile lastNames;
     private final DataFile namePrefixes;
     private final DataFile cities;
-    private final PRNG randomGenerator;
+    private final PRNG.Smart randomGenerator;
 
-    public RandomDataRs(DataFile maleNames, DataFile femaleNames, DataFile lastNames, DataFile namePrefixes, DataFile cities, PRNG randomGenerator)
-    {
+    public RandomDataRs(DataFile maleNames, DataFile femaleNames, DataFile lastNames, DataFile namePrefixes, DataFile cities, PRNG.Smart randomGenerator) {
         this.maleNames = maleNames;
         this.femaleNames = femaleNames;
         this.lastNames = lastNames;
@@ -56,31 +57,32 @@ public final class RandomDataRs implements RandomData {
     /**
      * Temporary main method for spiking purposes.
      * @param args Program arguments
-     * @throws Exception If there is a problem with resource file
+     * @throws Exception If there is a problem when reading data from resource file(s)
      */
     public static void main(final String[] args) throws Exception {
+        final PRNG.Smart rng = new R250_521.Smart(new R250_521());
         RandomDataRs randomDataRs = new RandomDataRs(
-          new CachedDataFile(file("sr_Latn_RS/firstNameMale.txt"), new R250()),
-            new CachedDataFile(file("sr_Latn_RS/firstNameFemale.txt"), new R250()),
-              new CachedDataFile(file("sr_Latn_RS/lastName.txt"), new R250()),
-                new CachedDataFile(file("sr_Latn_RS/namePrefix.txt"), new R250()),
-                  new CachedDataFile(file("sr_Latn_RS/cities.txt"), new R250()),
-                   new R250());
+                new CachedDataFile(resourceFile(new Name(locale, "firstNameMale.txt").name()), rng),
+                new CachedDataFile(resourceFile(new Name(locale, "firstNameFemale.txt").name()), rng),
+                new CachedDataFile(resourceFile(new Name(locale, "lastName.txt").name()), rng),
+                new CachedDataFile(resourceFile(new Name(locale, "namePrefix.txt").name()), rng),
+                new CachedDataFile(resourceFile(new Name(locale, "cities.txt").name()), rng),
+                rng);
 
         System.out.println(
-          randomDataRs.namePrefix()+ ", " + randomDataRs.firstName() + ", " +
-          randomDataRs.lastName()+ ", " + randomDataRs.dateOfBirth() + ", " +
-          randomDataRs.gender()+ ", " + randomDataRs.phoneNumber() + ", " +
-          randomDataRs.city()+ ", " + randomDataRs.country() + ", " +
-          randomDataRs.nationality()+ ", " + randomDataRs.currency() + " "
+                randomDataRs.namePrefix() + ", " + randomDataRs.firstName() + ", " +
+                        randomDataRs.lastName() + ", " + randomDataRs.dateOfBirth() + ", " +
+                        randomDataRs.gender() + ", " + randomDataRs.phoneNumber() + ", " +
+                        randomDataRs.city() + ", " + randomDataRs.country() + ", " +
+                        randomDataRs.nationality() + ", " + randomDataRs.currency() + " "
         );
     }
 
-    private static File file(String fileName) {
+    private static File resourceFile(String fileName) {
         return new File(
-            Thread.currentThread()
-                .getContextClassLoader()
-                .getResource(fileName).getFile()
+                Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResource(fileName).getFile()
         );
     }
 
@@ -90,25 +92,13 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String firstName() {
-        try
-        {
-            return randomGenerator.nextInt(1) == 0 ? maleNames.randomLine() : femaleNames.randomLine();
-        } catch (RandomDataException e)
-        {
-            return null;
-        }
+    public String firstName() throws RandomDataException {
+        return randomGenerator.nextInt(1) == 0 ? maleNames.randomLine() : femaleNames.randomLine();
     }
 
     @Override
-    public String lastName() {
-        try
-        {
-            return lastNames.randomLine();
-        } catch (RandomDataException e)
-        {
-            return null;
-        }
+    public String lastName() throws RandomDataException {
+        return lastNames.randomLine();
     }
 
     @Override
@@ -122,8 +112,8 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public Date dateOfBirth() {
-        return new Date();
+    public LocalDate dateOfBirth() {
+        return LocalDate.now();
     }
 
     @Override
@@ -132,19 +122,13 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String city() {
-        try
-        {
-            return cities.randomLine();
-        } catch (RandomDataException e)
-        {
-            return null;
-        }
+    public String city() throws RandomDataException {
+        return cities.randomLine();
     }
 
     @Override
     public String state() {
-        return null;
+        return "Srbija";
     }
 
     @Override
@@ -164,7 +148,7 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public Currency currency() {
-        return Currency.getInstance(new Locale("sr", "RS", "Latn"));
+        return Currency.getInstance(locale);
     }
 
     private int month() {

@@ -45,13 +45,13 @@ public final class DefaultDataFile implements DataFile {
     /**
      * Random generator needed for obtaining random lines from file.
      */
-    private final PRNG randomGenerator;
+    private final PRNG.Smart randomGenerator;
 
     /**
      * Secondary constructor.
      * @param name Name of the file
      */
-    public DefaultDataFile(final Name name, final PRNG randomGenerator) {
+    public DefaultDataFile(final Name name, final PRNG.Smart randomGenerator) {
         this(
             new File(
                 Thread.currentThread()
@@ -65,7 +65,7 @@ public final class DefaultDataFile implements DataFile {
      * Primary constructor.
      * @param origin Wrapped file
      */
-    public DefaultDataFile(final File origin, final PRNG randomGenerator) {
+    public DefaultDataFile(final File origin, final PRNG.Smart randomGenerator) {
         this.origin = origin;
         this.randomGenerator = randomGenerator;
     }

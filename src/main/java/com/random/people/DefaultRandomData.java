@@ -17,8 +17,8 @@
  */
 package com.random.people;
 
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 
 /**
  * Random data for undefined language.
@@ -53,7 +53,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public Date dateOfBirth() {
+    public LocalDate dateOfBirth() {
         return null;
     }
 

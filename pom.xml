@@ -53,13 +53,13 @@
         <project.externalResourcesDirectory>src/main/resources-ext</project.externalResourcesDirectory>
         <project.libDirectory>lib</project.libDirectory>
         <mainClass></mainClass>
-        <rng.version>0.0.2</rng.version>
+        <rng.version>0.1.0</rng.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.thejavaguy</groupId>
             <artifactId>rng</artifactId>
-            <version>0.0.3</version>
+            <version>${rng.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

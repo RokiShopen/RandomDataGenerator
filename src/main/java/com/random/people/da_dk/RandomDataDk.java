@@ -18,8 +18,9 @@
 package com.random.people.da_dk;
 
 import com.random.people.RandomData;
+
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 
 /**
  * Random data for Danish language.
@@ -54,7 +55,7 @@ public final class RandomDataDk implements RandomData {
     }
 
     @Override
-    public Date dateOfBirth() {
+    public LocalDate dateOfBirth() {
         return null;
     }
 
