@@ -18,7 +18,6 @@
 package com.random.people.ca_es;
 
 import com.random.people.RandomData;
-
 import java.time.LocalDate;
 import java.util.Currency;
 

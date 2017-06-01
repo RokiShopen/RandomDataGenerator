@@ -30,18 +30,21 @@ public interface RandomData {
     /**
      * Comment.
      * @return Name prefix
+     * @throws RandomDataException When can't fetch prefix
      */
     String namePrefix() throws RandomDataException;
 
     /**
      * Comment.
      * @return First name
+     * @throws RandomDataException When can't fetch name
      */
     String firstName() throws RandomDataException;
 
     /**
      * Comment.
      * @return Last name
+     * @throws RandomDataException When can't fetch name
      */
     String lastName() throws RandomDataException;
 
@@ -72,6 +75,7 @@ public interface RandomData {
     /**
      * Comment.
      * @return City
+     * @throws RandomDataException When can't fetch city
      */
     String city() throws RandomDataException;
 

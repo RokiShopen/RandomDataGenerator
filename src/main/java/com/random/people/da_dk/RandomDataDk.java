@@ -18,7 +18,6 @@
 package com.random.people.da_dk;
 
 import com.random.people.RandomData;
-
 import java.time.LocalDate;
 import java.util.Currency;
 
