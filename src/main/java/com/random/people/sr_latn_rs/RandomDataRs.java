@@ -38,6 +38,8 @@ import java.util.Locale;
  */
 public final class RandomDataRs implements RandomData {
     private static final Locale locale = new Locale("sr", "RS", "Latn");
+    private static final String MALE = "muski";
+    private final String gender;
     private final DataFile maleNames;
     private final DataFile femaleNames;
     private final DataFile lastNames;
@@ -45,7 +47,8 @@ public final class RandomDataRs implements RandomData {
     private final DataFile cities;
     private final PRNG.Smart randomGenerator;
 
-    public RandomDataRs(DataFile maleNames, DataFile femaleNames, DataFile lastNames, DataFile namePrefixes, DataFile cities, PRNG.Smart randomGenerator) {
+    public RandomDataRs(String gender, DataFile maleNames, DataFile femaleNames, DataFile lastNames, DataFile namePrefixes, DataFile cities, PRNG.Smart randomGenerator) {
+        this.gender = gender;
         this.maleNames = maleNames;
         this.femaleNames = femaleNames;
         this.lastNames = lastNames;
@@ -62,6 +65,7 @@ public final class RandomDataRs implements RandomData {
     public static void main(final String[] args) throws Exception {
         final PRNG.Smart rng = new R250_521.Smart(new R250_521());
         RandomDataRs randomDataRs = new RandomDataRs(
+        "muski",
                 new CachedDataFile(resourceFile(new Name(locale, "firstNameMale.txt").name()), rng),
                 new CachedDataFile(resourceFile(new Name(locale, "firstNameFemale.txt").name()), rng),
                 new CachedDataFile(resourceFile(new Name(locale, "lastName.txt").name()), rng),
@@ -86,14 +90,30 @@ public final class RandomDataRs implements RandomData {
         );
     }
 
+    private static boolean checkGender(String gender) {
+        return gender.equals(MALE);
+    }
+
     @Override
     public String namePrefix() throws RandomDataException {
-        return namePrefixes.specificLine(randomGenerator.nextInt(0, 2));
+        String namePrefix;
+        if (checkGender(gender)) {
+            namePrefix = namePrefixes.specificLine(0);
+        } else {
+            namePrefix = namePrefixes.specificLine(randomGenerator.nextInt(1, 2));
+        }
+        return namePrefix;
     }
 
     @Override
     public String firstName() throws RandomDataException {
-        return randomGenerator.nextInt(1) == 0 ? maleNames.randomLine() : femaleNames.randomLine();
+        String firstName;
+        if (checkGender(gender)) {
+            firstName = maleNames.randomLine();
+        } else {
+            firstName = femaleNames.randomLine();
+        }
+        return firstName;
     }
 
     @Override
@@ -108,7 +128,7 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public String gender() {
-        return randomGenerator.nextInt(1) == 0 ? "muški" : "ženski";
+        return gender;
     }
 
     @Override
