@@ -17,6 +17,7 @@
  */
 package com.random.people.sr_latn_rs;
 
+import com.random.people.RandomBirthday;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
 import com.random.people.datafile.CachedDataFile;
@@ -64,6 +65,10 @@ public final class RandomDataRs implements RandomData {
      * Random number generator.
      */
     private final PRNG.Smart rng;
+    /**
+     * Random birthday generator.
+     */
+    private final RandomBirthday birthday;
 
     /**
      * Primary constructor.
@@ -83,6 +88,7 @@ public final class RandomDataRs implements RandomData {
         this.prefixes = prefixes;
         this.cities = cities;
         this.rng = rng;
+        this.birthday = new RandomBirthday(this.rng);
     }
 
     @Override
@@ -124,7 +130,9 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public LocalDate dateOfBirth() {
-        return LocalDate.now();
+        final int min = 18;
+        final int max = 120;
+        return this.birthday.birthday(min, max);
     }
 
     @Override
@@ -239,45 +247,5 @@ public final class RandomDataRs implements RandomData {
                 .getContextClassLoader()
                 .getResource(name).getFile()
         );
-    }
-
-    /**
-     * Month number.
-     * @return Month in range [1,12]
-     */
-    private int month() {
-        final int lowest = 1;
-        final int highest = 12;
-        return this.rng.nextInt(lowest, highest);
-    }
-
-    /**
-     * Day in month.
-     * @return Day in range [1,31]
-     */
-    private int day() {
-        final int lowest = 1;
-        final int highest = 31;
-        return this.rng.nextInt(lowest, highest);
-    }
-
-    /**
-     * Year number.
-     * @return Year in range [1900,2017]
-     */
-    private int year() {
-        final int lowest = 1900;
-        final int highest = 2017;
-        return this.rng.nextInt(lowest, highest);
-    }
-
-    /**
-     * Digit.
-     * @return A single digit in range [0,9]
-     */
-    private int digit() {
-        final int lowest = 0;
-        final int highest = 9;
-        return this.rng.nextInt(lowest, highest);
     }
 }
