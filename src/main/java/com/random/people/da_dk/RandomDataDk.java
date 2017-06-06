@@ -30,12 +30,12 @@ import java.util.Currency;
  */
 public final class RandomDataDk implements RandomData {
     @Override
-    public String namePrefix() {
+    public String namePrefix(Gender gender) {
         return null;
     }
 
     @Override
-    public String firstName() {
+    public String firstName(Gender gender) {
         return null;
     }
 
@@ -50,7 +50,7 @@ public final class RandomDataDk implements RandomData {
     }
 
     @Override
-    public String gender() {
+    public String gender(Gender gender) {
         return null;
     }
 

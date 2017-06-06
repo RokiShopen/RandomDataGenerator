@@ -27,17 +27,23 @@ import java.util.Currency;
  * @since 0.0.1
  */
 public interface RandomData {
+    enum Gender
+    {
+        MALE,
+        FEMALE
+    }
+
     /**
      * Comment.
      * @return Name prefix
      */
-    String namePrefix() throws RandomDataException;
+    String namePrefix(Gender gender) throws RandomDataException;
 
     /**
      * Comment.
      * @return First name
      */
-    String firstName() throws RandomDataException;
+    String firstName(Gender gender) throws RandomDataException;
 
     /**
      * Comment.
@@ -55,7 +61,7 @@ public interface RandomData {
      * Comment.
      * @return Gender
      */
-    String gender();
+    String gender(Gender gender);
 
     /**
      * Comment.

@@ -38,8 +38,6 @@ import java.util.Locale;
  */
 public final class RandomDataRs implements RandomData {
     private static final Locale locale = new Locale("sr", "RS", "Latn");
-    private static final String MALE = "muski";
-    private final String gender;
     private final DataFile maleNames;
     private final DataFile femaleNames;
     private final DataFile lastNames;
@@ -47,8 +45,7 @@ public final class RandomDataRs implements RandomData {
     private final DataFile cities;
     private final PRNG.Smart randomGenerator;
 
-    public RandomDataRs(String gender, DataFile maleNames, DataFile femaleNames, DataFile lastNames, DataFile namePrefixes, DataFile cities, PRNG.Smart randomGenerator) {
-        this.gender = gender;
+    public RandomDataRs(DataFile maleNames, DataFile femaleNames, DataFile lastNames, DataFile namePrefixes, DataFile cities, PRNG.Smart randomGenerator) {
         this.maleNames = maleNames;
         this.femaleNames = femaleNames;
         this.lastNames = lastNames;
@@ -65,7 +62,6 @@ public final class RandomDataRs implements RandomData {
     public static void main(final String[] args) throws Exception {
         final PRNG.Smart rng = new R250_521.Smart(new R250_521());
         RandomDataRs randomDataRs = new RandomDataRs(
-        "muski",
                 new CachedDataFile(resourceFile(new Name(locale, "firstNameMale.txt").name()), rng),
                 new CachedDataFile(resourceFile(new Name(locale, "firstNameFemale.txt").name()), rng),
                 new CachedDataFile(resourceFile(new Name(locale, "lastName.txt").name()), rng),
@@ -74,9 +70,9 @@ public final class RandomDataRs implements RandomData {
                 rng);
 
         System.out.println(
-                randomDataRs.namePrefix() + ", " + randomDataRs.firstName() + ", " +
+                randomDataRs.namePrefix(Gender.MALE) + ", " + randomDataRs.firstName(Gender.MALE) + ", " +
                         randomDataRs.lastName() + ", " + randomDataRs.dateOfBirth() + ", " +
-                        randomDataRs.gender() + ", " + randomDataRs.phoneNumber() + ", " +
+                        randomDataRs.gender(Gender.MALE) + ", " + randomDataRs.phoneNumber() + ", " +
                         randomDataRs.city() + ", " + randomDataRs.country() + ", " +
                         randomDataRs.nationality() + ", " + randomDataRs.currency() + " "
         );
@@ -90,14 +86,10 @@ public final class RandomDataRs implements RandomData {
         );
     }
 
-    private static boolean checkGender(String gender) {
-        return gender.equals(MALE);
-    }
-
     @Override
-    public String namePrefix() throws RandomDataException {
+    public String namePrefix(Gender gender) throws RandomDataException {
         String namePrefix;
-        if (checkGender(gender)) {
+        if (gender.equals(Gender.MALE)) {
             namePrefix = namePrefixes.specificLine(0);
         } else {
             namePrefix = namePrefixes.specificLine(randomGenerator.nextInt(1, 2));
@@ -106,9 +98,9 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String firstName() throws RandomDataException {
+    public String firstName(Gender gender) throws RandomDataException {
         String firstName;
-        if (checkGender(gender)) {
+        if (gender.equals(Gender.MALE)) {
             firstName = maleNames.randomLine();
         } else {
             firstName = femaleNames.randomLine();
@@ -127,8 +119,12 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String gender() {
-        return gender;
+    public String gender(Gender gender) {
+        if (gender.equals(Gender.MALE)) {
+            return "muski";
+        } else {
+            return "zenski";
+        }
     }
 
     @Override
