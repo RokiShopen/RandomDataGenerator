@@ -27,12 +27,6 @@ import java.util.Currency;
  * @since 0.0.1
  */
 public interface RandomData {
-    enum Gender
-    {
-        MALE,
-        FEMALE
-    }
-
     /**
      * Comment.
      * @return Name prefix
@@ -61,7 +55,7 @@ public interface RandomData {
      * Comment.
      * @return Gender
      */
-    String gender(Gender gender);
+    Gender gender();
 
     /**
      * Comment.

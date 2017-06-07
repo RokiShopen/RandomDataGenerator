@@ -17,6 +17,7 @@
  */
 package com.random.people.sr_latn_rs;
 
+import com.random.people.Gender;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
 import com.random.people.datafile.CachedDataFile;
@@ -69,10 +70,11 @@ public final class RandomDataRs implements RandomData {
                 new CachedDataFile(resourceFile(new Name(locale, "cities.txt").name()), rng),
                 rng);
 
+        Gender gender = randomDataRs.gender();
         System.out.println(
-                randomDataRs.namePrefix(Gender.MALE) + ", " + randomDataRs.firstName(Gender.MALE) + ", " +
+                randomDataRs.namePrefix(gender) + ", " + randomDataRs.firstName(gender) + ", " +
                         randomDataRs.lastName() + ", " + randomDataRs.dateOfBirth() + ", " +
-                        randomDataRs.gender(Gender.MALE) + ", " + randomDataRs.phoneNumber() + ", " +
+                        gender + ", " + randomDataRs.phoneNumber() + ", " +
                         randomDataRs.city() + ", " + randomDataRs.country() + ", " +
                         randomDataRs.nationality() + ", " + randomDataRs.currency() + " "
         );
@@ -119,11 +121,11 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String gender(Gender gender) {
-        if (gender.equals(Gender.MALE)) {
-            return "muski";
+    public Gender gender() {
+        if (randomGenerator.nextBoolean()) {
+            return Gender.MALE;
         } else {
-            return "zenski";
+            return Gender.FEMALE;
         }
     }
 

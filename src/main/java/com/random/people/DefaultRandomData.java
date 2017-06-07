@@ -48,7 +48,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public String gender(Gender gender) {
+    public Gender gender() {
         return null;
     }
 

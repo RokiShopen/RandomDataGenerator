@@ -17,6 +17,7 @@
  */
 package com.random.people.ca_es;
 
+import com.random.people.Gender;
 import com.random.people.RandomData;
 
 import java.time.LocalDate;
@@ -50,7 +51,7 @@ public final class RandomDataEs implements RandomData {
     }
 
     @Override
-    public String gender(Gender gender) {
+    public Gender gender() {
         return null;
     }
 
