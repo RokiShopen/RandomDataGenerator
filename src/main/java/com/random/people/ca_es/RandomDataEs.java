@@ -19,7 +19,6 @@ package com.random.people.ca_es;
 
 import com.random.people.Gender;
 import com.random.people.RandomData;
-
 import java.time.LocalDate;
 import java.util.Currency;
 
@@ -31,12 +30,12 @@ import java.util.Currency;
  */
 public final class RandomDataEs implements RandomData {
     @Override
-    public String namePrefix(Gender gender) {
+    public String namePrefix(final Gender gender) {
         return null;
     }
 
     @Override
-    public String firstName(Gender gender) {
+    public String firstName(final Gender gender) {
         return null;
     }
 

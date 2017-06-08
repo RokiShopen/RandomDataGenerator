@@ -28,12 +28,12 @@ import java.util.Currency;
  */
 public final class DefaultRandomData implements RandomData {
     @Override
-    public String namePrefix(Gender gender) {
+    public String namePrefix(final Gender gender) {
         return null;
     }
 
     @Override
-    public String firstName(Gender gender) {
+    public String firstName(final Gender gender) {
         return null;
     }
 

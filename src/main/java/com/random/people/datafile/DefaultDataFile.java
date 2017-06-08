@@ -18,8 +18,6 @@
 package com.random.people.datafile;
 
 import com.random.people.RandomDataException;
-import org.thejavaguy.prng.generators.PRNG;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +28,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import org.thejavaguy.prng.generators.PRNG;
 
 /**
  * Default implementation of DataFile with uncached content.
@@ -39,64 +38,49 @@ import java.util.List;
  */
 public final class DefaultDataFile implements DataFile {
     /**
+     * Initial number of lines for a file.
+     */
+    private static final int NUM_LINES = 10;
+    /**
      * Underlying file with data.
      */
     private final File origin;
     /**
      * Random generator needed for obtaining random lines from file.
      */
-    private final PRNG.Smart randomGenerator;
+    private final PRNG.Smart rng;
 
     /**
      * Secondary constructor.
      * @param name Name of the file
+     * @param rng Random number generator
      */
-    public DefaultDataFile(final Name name, final PRNG.Smart randomGenerator) {
+    public DefaultDataFile(final Name name, final PRNG.Smart rng) {
         this(
             new File(
                 Thread.currentThread()
                     .getContextClassLoader()
                     .getResource(name.name()).getFile()
-                ), randomGenerator
+                ), rng
         );
     }
 
     /**
      * Primary constructor.
      * @param origin Wrapped file
+     * @param rng Random number generator
      */
-    public DefaultDataFile(final File origin, final PRNG.Smart randomGenerator) {
+    public DefaultDataFile(final File origin, final PRNG.Smart rng) {
         this.origin = origin;
-        this.randomGenerator = randomGenerator;
+        this.rng = rng;
     }
 
     @Override
     public String randomLine() throws RandomDataException {
-        final List<String> lines = new ArrayList<>();
+        final List<String> lines = new ArrayList<>(NUM_LINES);
         try (InputStream in = new FileInputStream(this.origin);
-             Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-             BufferedReader reader = new BufferedReader(rdr)) {
-             for (;;) {
-                final String line = reader.readLine();
-                if (line == null) {
-                    break;
-                }
-                lines.add(line);
-            }
-        } catch (final IOException ex) {
-            throw new RandomDataException(errorMessage(ex), ex);
-        }
-        final int lineIndex = randomGenerator.nextInt(0, lines.size() - 1);
-        return lines.get(lineIndex);
-    }
-
-    @Override
-    public String specificLine(int lineIndex) throws RandomDataException
-    {
-        final List<String> lines = new ArrayList<>();
-        try (InputStream in = new FileInputStream(this.origin);
-             Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-             BufferedReader reader = new BufferedReader(rdr)) {
+            Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(rdr)) {
             for (;;) {
                 final String line = reader.readLine();
                 if (line == null) {
@@ -107,7 +91,27 @@ public final class DefaultDataFile implements DataFile {
         } catch (final IOException ex) {
             throw new RandomDataException(errorMessage(ex), ex);
         }
-        return lines.get(lineIndex);
+        final int index = this.rng.nextInt(0, lines.size() - 1);
+        return lines.get(index);
+    }
+
+    @Override
+    public String specificLine(final int index) throws RandomDataException {
+        final List<String> lines = new ArrayList<>(NUM_LINES);
+        try (InputStream in = new FileInputStream(this.origin);
+            Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(rdr)) {
+            for (;;) {
+                final String line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+                lines.add(line);
+            }
+        } catch (final IOException ex) {
+            throw new RandomDataException(errorMessage(ex), ex);
+        }
+        return lines.get(index);
     }
 
     /**

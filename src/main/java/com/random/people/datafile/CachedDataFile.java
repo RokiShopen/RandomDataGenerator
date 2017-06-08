@@ -28,7 +28,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.thejavaguy.prng.generators.PRNG;
 
 /**
@@ -53,38 +52,41 @@ public final class CachedDataFile implements DataFile {
     /**
      * Random generator needed for obtaining random lines from file.
      */
-    private final PRNG.Smart randomGenerator;
+    private final PRNG.Smart rng;
 
     /**
      * Primary constructor.
      * @param origin Wrapped DataFile
+     * @param rng Random number generator
      */
-    public CachedDataFile(final File origin, final PRNG.Smart randomGenerator) {
+    public CachedDataFile(final File origin, final PRNG.Smart rng) {
         this.origin = origin;
         this.lines = new ArrayList<>(NUM_LINES);
-        this.randomGenerator = randomGenerator;
+        this.rng = rng;
     }
 
     @Override
     public String randomLine() throws RandomDataException {
-        readLines();
-        final int lineIndex = randomGenerator.nextInt(0, this.lines.size() - 1);
-        return this.lines.get(lineIndex);
+        this.readLines();
+        final int index = this.rng.nextInt(0, this.lines.size() - 1);
+        return this.lines.get(index);
     }
 
     @Override
-    public String specificLine(int lineIndex) throws RandomDataException
-    {
-        readLines();
-        return this.lines.get(lineIndex);
+    public String specificLine(final int index) throws RandomDataException {
+        this.readLines();
+        return this.lines.get(index);
     }
 
-    private void readLines() throws RandomDataException
-    {
+    /**
+     * Reads all lines from this file.
+     * @throws RandomDataException If reading from the file wasn't successful.
+     */
+    private void readLines() throws RandomDataException {
         if (this.lines.isEmpty()) {
             try (InputStream in = new FileInputStream(this.origin);
-                 Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-                 BufferedReader reader = new BufferedReader(rdr)) {
+                Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+                BufferedReader reader = new BufferedReader(rdr)) {
                 for (;;) {
                     final String line = reader.readLine();
                     if (line == null) {

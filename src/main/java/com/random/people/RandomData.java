@@ -29,19 +29,24 @@ import java.util.Currency;
 public interface RandomData {
     /**
      * Comment.
+     * @param gender Gender for which we want prefix
      * @return Name prefix
+     * @throws RandomDataException When can't fetch prefix
      */
     String namePrefix(Gender gender) throws RandomDataException;
 
     /**
      * Comment.
+     * @param gender Gender for which we want name
      * @return First name
+     * @throws RandomDataException When can't fetch name
      */
     String firstName(Gender gender) throws RandomDataException;
 
     /**
      * Comment.
      * @return Last name
+     * @throws RandomDataException When can't fetch name
      */
     String lastName() throws RandomDataException;
 
@@ -72,6 +77,7 @@ public interface RandomData {
     /**
      * Comment.
      * @return City
+     * @throws RandomDataException When can't fetch city
      */
     String city() throws RandomDataException;
 
