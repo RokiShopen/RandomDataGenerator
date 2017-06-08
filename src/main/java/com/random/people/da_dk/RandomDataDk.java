@@ -17,9 +17,11 @@
  */
 package com.random.people.da_dk;
 
+import com.random.people.Gender;
 import com.random.people.RandomData;
+
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 
 /**
  * Random data for Danish language.
@@ -29,12 +31,12 @@ import java.util.Date;
  */
 public final class RandomDataDk implements RandomData {
     @Override
-    public String namePrefix() {
+    public String namePrefix(Gender gender) {
         return null;
     }
 
     @Override
-    public String firstName() {
+    public String firstName(Gender gender) {
         return null;
     }
 
@@ -49,12 +51,12 @@ public final class RandomDataDk implements RandomData {
     }
 
     @Override
-    public String gender() {
+    public Gender gender() {
         return null;
     }
 
     @Override
-    public Date dateOfBirth() {
+    public LocalDate dateOfBirth() {
         return null;
     }
 

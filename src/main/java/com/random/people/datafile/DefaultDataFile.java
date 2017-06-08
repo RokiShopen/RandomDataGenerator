@@ -45,13 +45,13 @@ public final class DefaultDataFile implements DataFile {
     /**
      * Random generator needed for obtaining random lines from file.
      */
-    private final PRNG randomGenerator;
+    private final PRNG.Smart randomGenerator;
 
     /**
      * Secondary constructor.
      * @param name Name of the file
      */
-    public DefaultDataFile(final Name name, final PRNG randomGenerator) {
+    public DefaultDataFile(final Name name, final PRNG.Smart randomGenerator) {
         this(
             new File(
                 Thread.currentThread()
@@ -65,7 +65,7 @@ public final class DefaultDataFile implements DataFile {
      * Primary constructor.
      * @param origin Wrapped file
      */
-    public DefaultDataFile(final File origin, final PRNG randomGenerator) {
+    public DefaultDataFile(final File origin, final PRNG.Smart randomGenerator) {
         this.origin = origin;
         this.randomGenerator = randomGenerator;
     }
@@ -87,6 +87,26 @@ public final class DefaultDataFile implements DataFile {
             throw new RandomDataException(errorMessage(ex), ex);
         }
         final int lineIndex = randomGenerator.nextInt(0, lines.size() - 1);
+        return lines.get(lineIndex);
+    }
+
+    @Override
+    public String specificLine(int lineIndex) throws RandomDataException
+    {
+        final List<String> lines = new ArrayList<>();
+        try (InputStream in = new FileInputStream(this.origin);
+             Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(rdr)) {
+            for (;;) {
+                final String line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+                lines.add(line);
+            }
+        } catch (final IOException ex) {
+            throw new RandomDataException(errorMessage(ex), ex);
+        }
         return lines.get(lineIndex);
     }
 

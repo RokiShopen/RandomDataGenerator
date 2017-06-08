@@ -1,0 +1,27 @@
+Beograd
+Novi Sad
+Priština
+Niš
+Kragujevac
+Subotica
+Pančevo
+Zrenjanin
+Čačak
+Kraljevo
+Novi Pazar
+Leskovac
+Smederevo
+Vranje
+Užice
+Valjevo
+Kruševac
+Šabac
+Požarevac
+Sombor
+Pirot
+Zaječar
+Kikinda
+Sremska Mitrovica
+Jagodina
+Vršac
+Loznica

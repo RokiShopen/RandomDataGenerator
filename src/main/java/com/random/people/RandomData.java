@@ -17,8 +17,8 @@
  */
 package com.random.people;
 
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 
 /**
  * Rs class.
@@ -31,19 +31,19 @@ public interface RandomData {
      * Comment.
      * @return Name prefix
      */
-    String namePrefix() throws RandomDataException;
+    String namePrefix(Gender gender) throws RandomDataException;
 
     /**
      * Comment.
      * @return First name
      */
-    String firstName();
+    String firstName(Gender gender) throws RandomDataException;
 
     /**
      * Comment.
      * @return Last name
      */
-    String lastName();
+    String lastName() throws RandomDataException;
 
     /**
      * Comment.
@@ -55,13 +55,13 @@ public interface RandomData {
      * Comment.
      * @return Gender
      */
-    String gender();
+    Gender gender();
 
     /**
      * Comment.
      * @return Date of birth
      */
-    Date dateOfBirth();
+    LocalDate dateOfBirth();
 
     /**
      * Comment.
@@ -73,7 +73,7 @@ public interface RandomData {
      * Comment.
      * @return City
      */
-    String city();
+    String city() throws RandomDataException;
 
     /**
      * Comment.

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.thejavaguy.prng.generators.PRNG;
-import org.thejavaguy.prng.generators.R250;
 
 /**
  * DataFile with cached content.
@@ -54,13 +53,13 @@ public final class CachedDataFile implements DataFile {
     /**
      * Random generator needed for obtaining random lines from file.
      */
-    private final PRNG randomGenerator;
+    private final PRNG.Smart randomGenerator;
 
     /**
      * Primary constructor.
      * @param origin Wrapped DataFile
      */
-    public CachedDataFile(final File origin, final PRNG randomGenerator) {
+    public CachedDataFile(final File origin, final PRNG.Smart randomGenerator) {
         this.origin = origin;
         this.lines = new ArrayList<>(NUM_LINES);
         this.randomGenerator = randomGenerator;
@@ -68,10 +67,24 @@ public final class CachedDataFile implements DataFile {
 
     @Override
     public String randomLine() throws RandomDataException {
+        readLines();
+        final int lineIndex = randomGenerator.nextInt(0, this.lines.size() - 1);
+        return this.lines.get(lineIndex);
+    }
+
+    @Override
+    public String specificLine(int lineIndex) throws RandomDataException
+    {
+        readLines();
+        return this.lines.get(lineIndex);
+    }
+
+    private void readLines() throws RandomDataException
+    {
         if (this.lines.isEmpty()) {
             try (InputStream in = new FileInputStream(this.origin);
-                Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-                BufferedReader reader = new BufferedReader(rdr)) {
+                 Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+                 BufferedReader reader = new BufferedReader(rdr)) {
                 for (;;) {
                     final String line = reader.readLine();
                     if (line == null) {
@@ -83,8 +96,6 @@ public final class CachedDataFile implements DataFile {
                 throw new RandomDataException(errorMessage(ex), ex);
             }
         }
-        final int lineIndex = randomGenerator.nextInt(0, this.lines.size() - 1);
-        return this.lines.get(lineIndex);
     }
 
     /**
