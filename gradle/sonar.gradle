@@ -1,0 +1,8 @@
+sonarqube {
+    properties {
+        property "sonar.projectName", project.name
+        property "sonar.projectKey", "org.sonarqube:${project.name}"
+        property "sonar.host.url", "http://localhost:8080"
+        property "sonar.branch", "master"
+    }
+}
