@@ -17,10 +17,7 @@
  */
 package com.random.people.sr_latn_rs;
 
-import com.random.people.Gender;
-import com.random.people.RandomBirthday;
-import com.random.people.RandomData;
-import com.random.people.RandomDataException;
+import com.random.people.*;
 import com.random.people.datafile.CachedDataFile;
 import com.random.people.datafile.DataFile;
 import com.random.people.datafile.Name;
@@ -28,8 +25,10 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.Locale;
+
+import com.random.people.wrapper.Address;
+import com.random.people.wrapper.Person;
 import org.thejavaguy.prng.generators.PRNG;
-import org.thejavaguy.prng.generators.R250_521;
 
 /**
  * Random data for Serbian language.
@@ -71,6 +70,8 @@ public final class RandomDataRs implements RandomData {
      */
     private final RandomBirthday birthday;
 
+    private final Gender gender;
+
     /**
      * Primary constructor.
      * @param males Male names
@@ -80,9 +81,9 @@ public final class RandomDataRs implements RandomData {
      * @param cities Cities
      * @param rng Random number generator
      */
-    public RandomDataRs(final DataFile males, final DataFile females,
-        final DataFile last, final DataFile prefixes, final DataFile cities,
-        final PRNG.Smart rng) {
+    private RandomDataRs(final DataFile males, final DataFile females,
+                         final DataFile last, final DataFile prefixes, final DataFile cities,
+                         final PRNG.Smart rng) {
         this.males = males;
         this.females = females;
         this.last = last;
@@ -90,10 +91,22 @@ public final class RandomDataRs implements RandomData {
         this.cities = cities;
         this.rng = rng;
         this.birthday = new RandomBirthday(this.rng);
+        this.gender = gender();
+    }
+
+    public RandomDataRs(PRNG.Smart rng) {
+        this(
+            new CachedDataFile(resourceFile(named("firstNameMale.txt")), rng),
+            new CachedDataFile(resourceFile(named("firstNameFemale.txt")), rng),
+            new CachedDataFile(resourceFile(named("lastName.txt")), rng),
+            new CachedDataFile(resourceFile(named("namePrefix.txt")), rng),
+            new CachedDataFile(resourceFile(named("cities.txt")), rng),
+            rng
+        );
     }
 
     @Override
-    public String namePrefix(final Gender gender) throws RandomDataException {
+    public String namePrefix() throws RandomDataException {
         final String ret;
         if (gender.equals(Gender.MALE)) {
             ret = this.prefixes.specificLine(0);
@@ -104,7 +117,7 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String firstName(final Gender gender) throws RandomDataException {
+    public String firstName() throws RandomDataException {
         final String ret;
         if (gender.equals(Gender.MALE)) {
             ret = this.males.randomLine();
@@ -138,13 +151,19 @@ public final class RandomDataRs implements RandomData {
     @Override
     public LocalDate dateOfBirth() {
         final int min = 18;
-        final int max = 120;
+        final int max = 100;
         return this.birthday.birthday(min, max);
     }
 
     @Override
-    public String address() {
-        return null;
+    public Address address() throws RandomDataException {
+        return Address.builder()
+                .number(String.valueOf(this.rng.nextInt(1, 200)))
+                .city(city())
+                .state(state())
+                .country(country())
+                .postalCode(String.valueOf(this.rng.nextInt(11, 36) * 1000))
+                .build();
     }
 
     @Override
@@ -184,55 +203,20 @@ public final class RandomDataRs implements RandomData {
         return Currency.getInstance(LOCALE_SERBIAN);
     }
 
-    /**
-     * String representation of this object.
-     * @return String which describes this object
-     * @throws RandomDataException if there were some errors obtaining data
-     */
-    public String stringify() throws RandomDataException {
-        final StringBuilder ret = new StringBuilder();
-        final String separator = ", ";
-        final Gender gender = this.gender();
-        ret
-            .append(this.namePrefix(gender))
-            .append(separator)
-            .append(this.firstName(gender))
-            .append(separator)
-            .append(this.lastName())
-            .append(separator)
-            .append(this.dateOfBirth())
-            .append(separator)
-            .append(this.gender())
-            .append(separator)
-            .append(this.phoneNumber())
-            .append(separator)
-            .append(this.city())
-            .append(separator)
-            .append(this.country())
-            .append(separator)
-            .append(this.nationality())
-            .append(separator)
-            .append(this.currency());
-        return ret.toString();
-    }
-
-    /**
-     * Temporary main method for spiking purposes.
-     * @param args Program arguments
-     * @throws Exception If there is a problem when reading data from resource
-     *  file(s)
-     */
-    public static void main(final String[] args) throws Exception {
-        final PRNG.Smart rng = new R250_521.Smart(new R250_521());
-        final RandomDataRs serbian = new RandomDataRs(
-            new CachedDataFile(resourceFile(named("firstNameMale.txt")), rng),
-            new CachedDataFile(resourceFile(named("firstNameFemale.txt")), rng),
-            new CachedDataFile(resourceFile(named("lastName.txt")), rng),
-            new CachedDataFile(resourceFile(named("namePrefix.txt")), rng),
-            new CachedDataFile(resourceFile(named("cities.txt")), rng),
-            rng
-        );
-        System.out.println(serbian.stringify());
+    @Override
+    public Person person() throws RandomDataException {
+        return Person.builder()
+                .namePrefix(namePrefix())
+                .firstName(firstName())
+                .lastName(lastName())
+                .ssn(ssn())
+                .gender(gender)
+                .dateOfBirth(dateOfBirth())
+                .address(address())
+                .phoneNumber(phoneNumber())
+                .nationality(nationality())
+                .currency(currency())
+                .build();
     }
 
     /**
