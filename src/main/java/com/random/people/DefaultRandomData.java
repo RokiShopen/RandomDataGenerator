@@ -17,6 +17,9 @@
  */
 package com.random.people;
 
+import com.random.people.wrapper.Address;
+import com.random.people.wrapper.Person;
+
 import java.time.LocalDate;
 import java.util.Currency;
 
@@ -28,12 +31,12 @@ import java.util.Currency;
  */
 public final class DefaultRandomData implements RandomData {
     @Override
-    public String namePrefix(final Gender gender) {
+    public String namePrefix() {
         return null;
     }
 
     @Override
-    public String firstName(final Gender gender) {
+    public String firstName() {
         return null;
     }
 
@@ -58,7 +61,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public String address() {
+    public Address address() {
         return null;
     }
 
@@ -89,6 +92,11 @@ public final class DefaultRandomData implements RandomData {
 
     @Override
     public Currency currency() {
+        return null;
+    }
+
+    @Override
+    public Person person() throws RandomDataException {
         return null;
     }
 }

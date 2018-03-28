@@ -18,7 +18,11 @@
 package com.random.people.ca_es;
 
 import com.random.people.Gender;
+import com.random.people.wrapper.Address;
+import com.random.people.wrapper.Person;
 import com.random.people.RandomData;
+import com.random.people.RandomDataException;
+
 import java.time.LocalDate;
 import java.util.Currency;
 
@@ -30,12 +34,12 @@ import java.util.Currency;
  */
 public final class RandomDataEs implements RandomData {
     @Override
-    public String namePrefix(final Gender gender) {
+    public String namePrefix() {
         return null;
     }
 
     @Override
-    public String firstName(final Gender gender) {
+    public String firstName() {
         return null;
     }
 
@@ -60,7 +64,7 @@ public final class RandomDataEs implements RandomData {
     }
 
     @Override
-    public String address() {
+    public Address address() {
         return null;
     }
 
@@ -91,6 +95,11 @@ public final class RandomDataEs implements RandomData {
 
     @Override
     public Currency currency() {
+        return null;
+    }
+
+    @Override
+    public Person person() throws RandomDataException {
         return null;
     }
 }

@@ -17,6 +17,9 @@
  */
 package com.random.people;
 
+import com.random.people.wrapper.Address;
+import com.random.people.wrapper.Person;
+
 import java.time.LocalDate;
 import java.util.Currency;
 
@@ -33,7 +36,7 @@ public interface RandomData {
      * @return Name prefix
      * @throws RandomDataException When can't fetch prefix
      */
-    String namePrefix(Gender gender) throws RandomDataException;
+    String namePrefix() throws RandomDataException;
 
     /**
      * Comment.
@@ -41,7 +44,7 @@ public interface RandomData {
      * @return First name
      * @throws RandomDataException When can't fetch name
      */
-    String firstName(Gender gender) throws RandomDataException;
+    String firstName() throws RandomDataException;
 
     /**
      * Comment.
@@ -72,7 +75,7 @@ public interface RandomData {
      * Comment.
      * @return Address
      */
-    String address();
+    Address address() throws RandomDataException;
 
     /**
      * Comment.
@@ -110,4 +113,10 @@ public interface RandomData {
      * @return Currency
      */
     Currency currency();
+
+    /**
+     * Comment.
+     * @return Person
+     */
+    Person person() throws RandomDataException;
 }
