@@ -1,0 +1,83 @@
+plugins {
+    id "org.sonarqube" version "2.6.2"
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply from: "${projectDir}/gradle/sonar.gradle"
+
+
+repositories {
+    mavenLocal()
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.thejavaguy', name: 'rng', version: '0.1.0'
+
+    testCompile('org.junit:junit5-engine:5.0.0-ALPHA')
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+}
+
+group = 'com.github.rokishopen'
+archivesBaseName = "random-people"
+version = '0.0.1-SNAPSHOT'
+
+wrapper {
+    gradleVersion = '4.5.1'
+}
+
+//signing {
+//    sign configurations.archives
+//}
+
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//
+//            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+//                authentication(userName: ossrhUsername, password: ossrhPassword)
+//            }
+//
+//            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+//                authentication(userName: ossrhUsername, password: ossrhPassword)
+//            }
+//
+//            pom.project {
+//                name 'Random people generator'
+//                packaging 'jar'
+//                // optionally artifactId can be defined here
+//                description 'Generates various kinds of random data, for example names, addresses, phone numbers, dates, personal ids, email addresses, bank account numbers etc.'
+//                url 'https://github.com/RokiShopen/RandomDataGenerator'
+//
+//                scm {
+//                    connection 'scm:git:git@github.com:RokiShopen/RandomDataGenerator.git'
+//                    developerConnection 'scm:git:git@github.com:RokiShopen/RandomDataGenerator.git'
+//                    url 'https://github.com/RokiShopen/RandomDataGenerator'
+//                }
+//
+//                licenses {
+//                    license {
+//                        name 'GNU Lesser General Public License'
+//                        url 'http://www.gnu.org/licenses/lgpl-3.0.en.html'
+//                    }
+//                }
+//
+//                developers {
+//                    developer {
+//                        id 'RokiShopen'
+//                        name 'Aleksandar Marinkovic'
+//                        email 'marinkovic.aleksandarr@gmail.com'
+//                    }
+//                    developer {
+//                        id 'TheJavaGuy'
+//                        name 'Ivan Milosavljević'
+//                        email 'marinkovic.aleksandarr@gmail.com'
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

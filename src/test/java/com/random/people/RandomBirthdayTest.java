@@ -17,13 +17,13 @@
  */
 package com.random.people;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.thejavaguy.prng.generators.R250_521;
+
 import java.time.LocalDate;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.thejavaguy.prng.generators.R250_521;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test for RandomBirthday.
@@ -31,27 +31,27 @@ import org.thejavaguy.prng.generators.R250_521;
  * @version $Id$
  * @since 0.0.1
  */
-public final class RandomBirthdayTest {
+final class RandomBirthdayTest {
     private RandomBirthday sut;
     private static final int REPS = 10000;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    void setUp() {
         this.sut = new RandomBirthday(new R250_521.Smart(new R250_521()));
     }
 
     @Test
-    public void returnsBirthdayInTheSameYear() {
+    void returnsBirthdayInTheSameYear() {
         testBirthdayForAge(0, 0);
     }
 
     @Test
-    public void returnsBirthdayInTheSpecificYear() {
+    void returnsBirthdayInTheSpecificYear() {
         testBirthdayForAge(6, 6);
     }
 
     @Test
-    public void returnsBirthdayInTheSpecificRange() {
+    void returnsBirthdayInTheSpecificRange() {
         testBirthdayForAge(6, 18);
     }
 
@@ -61,8 +61,8 @@ public final class RandomBirthdayTest {
         final LocalDate lowerBound = now.minusYears((long) (maxAge + 1)).plusDays(1L);
         for (int i = 0; i < REPS; ++i) {
             final LocalDate actual = this.sut.birthday(minAge, maxAge);
-            assertThat(actual.isEqual(lowerBound) || actual.isAfter(lowerBound), is(true));
-            assertThat("actual = " + actual + ", min = " + lowerBound + ", max = " + upperBound, actual.isEqual(upperBound) || actual.isBefore(upperBound), is(true));
+            assertTrue(actual.isEqual(lowerBound) || actual.isAfter(lowerBound));
+            assertTrue(actual.isEqual(upperBound) || actual.isBefore(upperBound));
         }
     }
 }
