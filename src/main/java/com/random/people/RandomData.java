@@ -17,11 +17,14 @@
  */
 package com.random.people;
 
-import com.random.people.wrapper.Address;
-import com.random.people.wrapper.Person;
-
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.List;
+import com.random.people.person.City;
+import com.random.people.person.Contact;
+import com.random.people.person.Country;
+import com.random.people.person.PersonName;
+import com.random.people.person.Street;
 
 /**
  * Rs class.
@@ -32,11 +35,18 @@ import java.util.Currency;
 public interface RandomData {
     /**
      * Comment.
+     * @return PersonName Name of a person
+     * @throws RandomDataException When can't fetch some name related data
+     */
+    PersonName personName() throws RandomDataException;
+
+    /**
+     * Comment.
      * @param gender Gender for which we want prefix
-     * @return Name prefix
+     * @return String Name prefix
      * @throws RandomDataException When can't fetch prefix
      */
-    String namePrefix() throws RandomDataException;
+    String namePrefix(Gender gender) throws RandomDataException;
 
     /**
      * Comment.
@@ -44,7 +54,16 @@ public interface RandomData {
      * @return First name
      * @throws RandomDataException When can't fetch name
      */
-    String firstName() throws RandomDataException;
+    String firstName(Gender gender) throws RandomDataException;
+
+    /**
+     * Comment.
+     * @param gender Gender for which we want name
+     * @param count How many first names we want
+     * @return First name
+     * @throws RandomDataException When can't fetch name
+     */
+    List<String> firstNames(Gender gender, int count) throws RandomDataException;
 
     /**
      * Comment.
@@ -55,9 +74,17 @@ public interface RandomData {
 
     /**
      * Comment.
+     * @return Last name
+     * @param count How many last names we want
+     * @throws RandomDataException When can't fetch name
+     */
+    List<String> lastNames(int count) throws RandomDataException;
+
+    /**
+     * Comment.
      * @return Ssn
      */
-    String ssn();
+    String id(LocalDate birthday, City city, Gender gender);
 
     /**
      * Comment.
@@ -73,9 +100,16 @@ public interface RandomData {
 
     /**
      * Comment.
-     * @return Address
+     * @return Contact details
      */
-    Address address() throws RandomDataException;
+    Contact contact() throws RandomDataException;
+
+    /**
+     * Comment.
+     * @return Address
+     * @throws RandomDataException When can't fetch address
+     */
+    Street street() throws RandomDataException;
 
     /**
      * Comment.
@@ -86,27 +120,24 @@ public interface RandomData {
 
     /**
      * Comment.
-     * @return State
-     */
-    String state();
-
-    /**
-     * Comment.
      * @return Country
      */
-    String country();
+    Country country();
 
     /**
      * Comment.
+     * @param country Country
+     * @param city City
      * @return Phone number
      */
-    String phoneNumber();
+    String phoneNumber(Country country, City city);
 
     /**
      * Comment.
-     * @return Nationality
+     * @param country Country
+     * @return Mobile phone number
      */
-    String nationality();
+    String mobilePhoneNumber(Country country);
 
     /**
      * Comment.
@@ -116,7 +147,8 @@ public interface RandomData {
 
     /**
      * Comment.
-     * @return Person
+     * @param country Country
+     * @return Email address
      */
-    Person person() throws RandomDataException;
+    String email(Country country);
 }

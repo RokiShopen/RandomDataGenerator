@@ -17,18 +17,32 @@
  */
 package com.random.people.sr_latn_rs;
 
-import com.random.people.*;
+import java.io.File;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
+
+import org.thejavaguy.prng.generators.PRNG;
+import org.thejavaguy.prng.generators.R250_521;
+
+import com.random.people.Gender;
+import com.random.people.RandomBirthday;
+import com.random.people.RandomData;
+import com.random.people.RandomDataException;
 import com.random.people.datafile.CachedDataFile;
 import com.random.people.datafile.DataFile;
 import com.random.people.datafile.Name;
-import java.io.File;
-import java.time.LocalDate;
-import java.util.Currency;
-import java.util.Locale;
-
-import com.random.people.wrapper.Address;
-import com.random.people.wrapper.Person;
-import org.thejavaguy.prng.generators.PRNG;
+import com.random.people.person.Address;
+import com.random.people.person.City;
+import com.random.people.person.CityCodes;
+import com.random.people.person.Contact;
+import com.random.people.person.Country;
+import com.random.people.person.CountryCodes;
+import com.random.people.person.CountryName;
+import com.random.people.person.PersonName;
+import com.random.people.person.Street;
 
 /**
  * Random data for Serbian language.
@@ -37,10 +51,6 @@ import org.thejavaguy.prng.generators.PRNG;
  * @since 0.0.1
  */
 public final class RandomDataRs implements RandomData {
-    /**
-     * Serbian locale.
-     */
-    private static final Locale LOCALE_SERBIAN = new Locale("sr", "RS", "Latn");
     /**
      * Male names.
      */
@@ -54,13 +64,17 @@ public final class RandomDataRs implements RandomData {
      */
     private final DataFile last;
     /**
-     * Name prefixes.
+     * PersonName prefixes.
      */
     private final DataFile prefixes;
     /**
      * Cities.
      */
     private final DataFile cities;
+    /**
+     * Streets.
+     */
+    private final DataFile streets;
     /**
      * Random number generator.
      */
@@ -69,44 +83,69 @@ public final class RandomDataRs implements RandomData {
      * Random birthday generator.
      */
     private final RandomBirthday birthday;
-
-    private final Gender gender;
+    /**
+     * Serbian locale.
+     */
+    private final Locale locale;
 
     /**
      * Primary constructor.
      * @param males Male names
      * @param females Female names
      * @param last Last names
-     * @param prefixes Name prefixes
+     * @param prefixes PersonName prefixes
      * @param cities Cities
+     * @param streets Streets
      * @param rng Random number generator
+     * @param locale Locale
      */
-    private RandomDataRs(final DataFile males, final DataFile females,
-                         final DataFile last, final DataFile prefixes, final DataFile cities,
-                         final PRNG.Smart rng) {
+    public RandomDataRs(final DataFile males, final DataFile females,
+                        final DataFile last, final DataFile prefixes, final DataFile cities,
+                        final DataFile streets, final PRNG.Smart rng, final Locale locale) {
         this.males = males;
         this.females = females;
         this.last = last;
         this.prefixes = prefixes;
         this.cities = cities;
+        this.streets = streets;
         this.rng = rng;
         this.birthday = new RandomBirthday(this.rng);
-        this.gender = gender();
-    }
-
-    public RandomDataRs(PRNG.Smart rng) {
-        this(
-            new CachedDataFile(resourceFile(named("firstNameMale.txt")), rng),
-            new CachedDataFile(resourceFile(named("firstNameFemale.txt")), rng),
-            new CachedDataFile(resourceFile(named("lastName.txt")), rng),
-            new CachedDataFile(resourceFile(named("namePrefix.txt")), rng),
-            new CachedDataFile(resourceFile(named("cities.txt")), rng),
-            rng
-        );
+        this.locale = locale;
     }
 
     @Override
-    public String namePrefix() throws RandomDataException {
+    public PersonName personName() throws RandomDataException {
+        final Gender gender = this.gender();
+        final PersonName ret = new PersonName(gender, this.namePrefix(gender));
+        final int givens = numberOfGivenNames();
+        final int lasts = numberOfLastNames(gender);
+        final List<String> givenList = this.firstNames(gender, givens);
+        final List<String> lastList = this.lastNames(lasts);
+        ret.addGivenNames(givenList);
+        ret.addLastNames(lastList);
+        return ret;
+    }
+
+    private int numberOfGivenNames() {
+        int ret = 1;
+        if (this.rng.nextInt(1, 1000) == 1) {
+            ret = 2;
+        }
+        return ret;
+    }
+
+    private int numberOfLastNames(final Gender gender) {
+        int ret = 1;
+        if (gender == Gender.MALE && this.rng.nextInt(1, 1000) == 1) {
+            ret = 2;
+        } else if (gender == Gender.FEMALE && this.rng.nextInt(1, 1000) <= 10) {
+            ret = 2;
+        }
+        return ret;
+    }
+
+    @Override
+    public String namePrefix(final Gender gender) throws RandomDataException {
         final String ret;
         if (gender.equals(Gender.MALE)) {
             ret = this.prefixes.specificLine(0);
@@ -117,7 +156,7 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String firstName() throws RandomDataException {
+    public String firstName(final Gender gender) throws RandomDataException {
         final String ret;
         if (gender.equals(Gender.MALE)) {
             ret = this.males.randomLine();
@@ -128,12 +167,30 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
+    public List<String> firstNames(final Gender gender, final int count) throws RandomDataException {
+        final List<String> ret = new ArrayList<>(count);
+        for (int i = 0; i < count; ++i) {
+            ret.add(this.firstName(gender));
+        }
+        return ret;
+    }
+
+    @Override
     public String lastName() throws RandomDataException {
         return this.last.randomLine();
     }
 
     @Override
-    public String ssn() {
+    public List<String> lastNames(final int count) throws RandomDataException {
+        final List<String> ret = new ArrayList<>();
+        for (int i = 0; i < count; ++i) {
+            ret.add(this.lastName());
+        }
+        return ret;
+    }
+
+    @Override
+    public String id(final LocalDate birthday, final City city, final Gender gender) {
         return null;
     }
 
@@ -151,19 +208,53 @@ public final class RandomDataRs implements RandomData {
     @Override
     public LocalDate dateOfBirth() {
         final int min = 18;
-        final int max = 100;
+        final int max = 120;
         return this.birthday.birthday(min, max);
     }
 
     @Override
-    public Address address() throws RandomDataException {
-        return Address.builder()
-                .number(String.valueOf(this.rng.nextInt(1, 200)))
-                .city(city())
-                .state(state())
-                .country(country())
-                .postalCode(String.valueOf(this.rng.nextInt(11, 36) * 1000))
-                .build();
+    public Contact contact() throws RandomDataException {
+        final Address address = address();
+        final Contact ret = new Contact(
+                address,
+                this.email(address.country()),
+                this.phoneNumber(address.country(), address.city()),
+                this.mobilePhoneNumber(address.country()));
+        return ret;
+    }
+
+    private Address address() throws RandomDataException {
+        final Street street = this.street();
+        final City city = this.cityX();
+        final Country country = this.country();
+        final Address ret = new Address(street, city, country);
+        return ret;
+    }
+
+    @Override
+    public Street street() throws RandomDataException {
+        final String name = this.streets.randomLine();
+        final int number = this.rng.nextInt(1, 300);
+        String snumber = String.valueOf(number);
+        if (this.rng.nextInt(1, 1000) <= 5) {
+            final char letter = (char) this.rng.nextInt('a', 'z');
+            snumber += String.valueOf(letter);
+        }
+        return new Street(name, snumber);
+    }
+
+    private City cityX() throws RandomDataException {
+        final String city = this.cities.randomLine();
+        final String[] components = city.split(";");
+        int phone = 1;
+        if (components.length >= 2) {
+            phone = Integer.parseInt(components[1]);
+        }
+        String postal = "A12345";
+        if (components.length >= 3) {
+            postal = components[2];
+        }
+        return new City(components[0], new CityCodes(phone, postal));
     }
 
     @Override
@@ -172,51 +263,68 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String state() {
-        return "Srbija";
+    public Country country() {
+        final CountryName name = new CountryName("Srbija", "Serbia");
+        final int[] mobiles = new int[]{62, 63, 64, 65, 66, 67, 68, 69};
+        final CountryCodes codes = new CountryCodes(381, mobiles, "RS", "SRB");
+        return new Country(name, this.currency(), codes);
     }
 
     @Override
-    public String country() {
-        return "Srbija";
-    }
-
-    @Override
-    public String phoneNumber() {
-        final String prefix = "+381";
+    public String phoneNumber(final Country country, final City city) {
         final int minimum = 1000000;
         final int maximum = 9999999;
         final StringBuilder ret = new StringBuilder();
         ret
-            .append(prefix)
-            .append(this.rng.nextInt(minimum, maximum));
+                .append("+")
+                .append(country.codes().phone())
+                .append(city.codes().phone())
+                .append(this.rng.nextInt(minimum, maximum));
         return ret.toString();
     }
 
     @Override
-    public String nationality() {
-        return "Srpska";
+    public String mobilePhoneNumber(final Country country) {
+        final int minimum = 1000000;
+        final int maximum = 9999999;
+        final int[] mobile = country.codes().mobile();
+        final StringBuilder ret = new StringBuilder();
+        ret
+                .append("+")
+                .append(country.codes().phone())
+                .append(mobile[this.rng.nextInt(mobile.length - 1)])
+                .append(this.rng.nextInt(minimum, maximum));
+        return ret.toString();
     }
 
     @Override
     public Currency currency() {
-        return Currency.getInstance(LOCALE_SERBIAN);
+        return Currency.getInstance(this.locale);
     }
 
     @Override
-    public Person person() throws RandomDataException {
-        return Person.builder()
-                .namePrefix(namePrefix())
-                .firstName(firstName())
-                .lastName(lastName())
-                .ssn(ssn())
-                .gender(gender)
-                .dateOfBirth(dateOfBirth())
-                .address(address())
-                .phoneNumber(phoneNumber())
-                .nationality(nationality())
-                .currency(currency())
-                .build();
+    public String email(final Country country) {
+        return "user@" + country.name().english() + "." + country.codes().isoAlpha2().toLowerCase();
+    }
+
+    /**
+     * Temporary main method for spiking purposes.
+     * @param args Program arguments
+     * @throws Exception If there is a problem when reading data from resource
+     *  file(s)
+     */
+    public static void main(final String[] args) throws Exception {
+        final PRNG.Smart rng = new R250_521.Smart(new R250_521());
+        final RandomDataRs serbian = new RandomDataRs(
+                new CachedDataFile(resourceFile(named("firstNameMale.txt")), rng),
+                new CachedDataFile(resourceFile(named("firstNameFemale.txt")), rng),
+                new CachedDataFile(resourceFile(named("lastName.txt")), rng),
+                new CachedDataFile(resourceFile(named("namePrefix.txt")), rng),
+                new CachedDataFile(resourceFile(named("cities.txt")), rng),
+                new CachedDataFile(resourceFile(named("streets.txt")), rng),
+                rng,
+                new Locale("sr", "RS", "Latn")
+        );
     }
 
     /**
@@ -225,19 +333,19 @@ public final class RandomDataRs implements RandomData {
      * @return Properly formatted name of a resource file
      */
     private static String named(final String filename) {
-        return new Name(LOCALE_SERBIAN, filename).name();
+        return new Name(new Locale("sr", "RS", "Latn"), filename).name();
     }
 
     /**
      * Returns a handle to a resource file.
-     * @param name Name of the file
+     * @param name PersonName of the file
      * @return A handle to a resource file
      */
     private static File resourceFile(final String name) {
         return new File(
-            Thread.currentThread()
-                .getContextClassLoader()
-                .getResource(name).getFile()
+                Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResource(name).getFile()
         );
     }
 }
