@@ -17,11 +17,14 @@
  */
 package com.random.people;
 
-import com.random.people.wrapper.Address;
-import com.random.people.wrapper.Person;
-
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.List;
+import com.random.people.person.City;
+import com.random.people.person.Contact;
+import com.random.people.person.Country;
+import com.random.people.person.PersonName;
+import com.random.people.person.Street;
 
 /**
  * Random data for undefined language.
@@ -31,12 +34,22 @@ import java.util.Currency;
  */
 public final class DefaultRandomData implements RandomData {
     @Override
-    public String namePrefix() {
+    public PersonName personName() throws RandomDataException {
         return null;
     }
 
     @Override
-    public String firstName() {
+    public String namePrefix(final Gender gender) {
+        return null;
+    }
+
+    @Override
+    public String firstName(final Gender gender) {
+        return null;
+    }
+
+    @Override
+    public List<String> firstNames(final Gender gender, final int count) throws RandomDataException {
         return null;
     }
 
@@ -46,7 +59,12 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public String ssn() {
+    public List<String> lastNames(final int count) throws RandomDataException {
+        return null;
+    }
+
+    @Override
+    public String id(final LocalDate birthday, final City city, final Gender gender) {
         return null;
     }
 
@@ -61,7 +79,12 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public Address address() {
+    public Contact contact() throws RandomDataException {
+        return null;
+    }
+
+    @Override
+    public Street street() {
         return null;
     }
 
@@ -71,22 +94,17 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public String state() {
+    public Country country() {
         return null;
     }
 
     @Override
-    public String country() {
+    public String phoneNumber(final Country country, final City city) {
         return null;
     }
 
     @Override
-    public String phoneNumber() {
-        return null;
-    }
-
-    @Override
-    public String nationality() {
+    public String mobilePhoneNumber(final Country country) {
         return null;
     }
 
@@ -96,7 +114,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public Person person() throws RandomDataException {
+    public String email(final Country country) {
         return null;
     }
 }

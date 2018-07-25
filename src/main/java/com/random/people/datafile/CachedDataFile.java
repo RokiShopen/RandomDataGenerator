@@ -92,7 +92,10 @@ public final class CachedDataFile implements DataFile {
                     if (line == null) {
                         break;
                     }
+                    final String trimmed = line.trim();
+                    if (!trimmed.isEmpty()) {
                     this.lines.add(line);
+                    }
                 }
             } catch (final IOException ex) {
                 throw new RandomDataException(errorMessage(ex), ex);

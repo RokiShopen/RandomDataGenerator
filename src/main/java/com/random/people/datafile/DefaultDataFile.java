@@ -86,7 +86,10 @@ public final class DefaultDataFile implements DataFile {
                 if (line == null) {
                     break;
                 }
+                final String trimmed = line.trim();
+                if (!trimmed.isEmpty()) {
                 lines.add(line);
+            }
             }
         } catch (final IOException ex) {
             throw new RandomDataException(errorMessage(ex), ex);
@@ -106,7 +109,10 @@ public final class DefaultDataFile implements DataFile {
                 if (line == null) {
                     break;
                 }
+                final String trimmed = line.trim();
+                if (!trimmed.isEmpty()) {
                 lines.add(line);
+                }
             }
         } catch (final IOException ex) {
             throw new RandomDataException(errorMessage(ex), ex);
