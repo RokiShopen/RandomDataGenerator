@@ -28,3 +28,5 @@ hs_err_pid*
 # Maven
 log/
 target/
+
+!gradle/wrapper/gradle-wrapper.jar
