@@ -1,10 +1,13 @@
 package com.random.people.person;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.Currency;
 
 /**
  * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public final class Country {
     private CountryName name;
     private Currency currency;

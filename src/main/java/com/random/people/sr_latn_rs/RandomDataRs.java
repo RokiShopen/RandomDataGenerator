@@ -191,7 +191,7 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public String id(final LocalDate birthday, final City city, final Gender gender) {
-        return null;
+        return "DUMMY_ID";
     }
 
     @Override
