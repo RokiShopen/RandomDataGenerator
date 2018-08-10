@@ -23,6 +23,7 @@ import java.util.List;
 import com.random.people.person.City;
 import com.random.people.person.Contact;
 import com.random.people.person.Country;
+import com.random.people.person.Gender;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
 
@@ -101,8 +102,9 @@ public interface RandomData {
     /**
      * Comment.
      * @return Contact details
+     * @param name
      */
-    Contact contact() throws RandomDataException;
+    Contact contact(PersonName name) throws RandomDataException;
 
     /**
      * Comment.
@@ -148,7 +150,8 @@ public interface RandomData {
     /**
      * Comment.
      * @param country Country
+     * @param name
      * @return Email address
      */
-    String email(Country country);
+    String email(Country country, PersonName name);
 }

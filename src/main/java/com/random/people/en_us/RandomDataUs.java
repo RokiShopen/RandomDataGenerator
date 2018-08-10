@@ -17,7 +17,7 @@
  */
 package com.random.people.en_us;
 
-import com.random.people.Gender;
+import com.random.people.person.Gender;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
 import com.random.people.person.City;
@@ -82,7 +82,7 @@ public final class RandomDataUs implements RandomData {
     }
 
     @Override
-    public Contact contact() throws RandomDataException {
+    public Contact contact(PersonName name) throws RandomDataException {
         return null;
     }
 
@@ -117,7 +117,7 @@ public final class RandomDataUs implements RandomData {
     }
 
     @Override
-    public String email(final Country country) {
+    public String email(final Country country, PersonName name) {
         return null;
     }
 }

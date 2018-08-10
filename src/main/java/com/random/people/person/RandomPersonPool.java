@@ -1,6 +1,5 @@
 package com.random.people.person;
 
-import com.random.people.Gender;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
 import com.random.people.ca_es.RandomDataEs;
@@ -78,7 +77,7 @@ public final class RandomPersonPool implements PersonPool {
     public Person next() throws RandomDataException {
         final PersonName name = personName();
         final LocalDate birthday = birthday();
-        final Contact contact = contact();
+        final Contact contact = contact(name);
         final String id = id(birthday, contact.address().city(), name.gender());
         return new Person(name, birthday, contact, id);
     }
@@ -95,7 +94,7 @@ public final class RandomPersonPool implements PersonPool {
         return this.randomData.id(birthday, city, gender);
     }
 
-    private Contact contact() throws RandomDataException {
-        return this.randomData.contact();
+    private Contact contact(final PersonName name) throws RandomDataException {
+        return this.randomData.contact(name);
     }
 }

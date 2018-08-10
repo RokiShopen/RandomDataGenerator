@@ -23,6 +23,7 @@ import java.util.List;
 import com.random.people.person.City;
 import com.random.people.person.Contact;
 import com.random.people.person.Country;
+import com.random.people.person.Gender;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
 
@@ -79,7 +80,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public Contact contact() throws RandomDataException {
+    public Contact contact(PersonName name) throws RandomDataException {
         return null;
     }
 
@@ -114,7 +115,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public String email(final Country country) {
+    public String email(final Country country, PersonName name) {
         return null;
     }
 }

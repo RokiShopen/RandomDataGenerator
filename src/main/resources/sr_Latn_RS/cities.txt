@@ -1,8 +1,8 @@
-Beograd
-Novi Sad
+Beograd;11;11000
+Novi Sad;21;21000
 Priština
-Niš
-Kragujevac
+Niš;18;18000
+Kragujevac;34;34000
 Subotica
 Pančevo
 Zrenjanin

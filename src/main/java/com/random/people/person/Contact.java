@@ -1,11 +1,8 @@
 package com.random.people.person;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
 /**
  * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  */
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public final class Contact {
     private final Address address;
     private final String email;

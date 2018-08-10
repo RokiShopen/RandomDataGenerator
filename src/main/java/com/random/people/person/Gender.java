@@ -15,7 +15,7 @@
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people;
+package com.random.people.person;
 
 /**
  * Random data enum that is used for different genders.

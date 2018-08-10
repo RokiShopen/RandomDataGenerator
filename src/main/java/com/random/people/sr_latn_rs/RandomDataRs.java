@@ -27,7 +27,7 @@ import java.util.Locale;
 import org.thejavaguy.prng.generators.PRNG;
 import org.thejavaguy.prng.generators.R250_521;
 
-import com.random.people.Gender;
+import com.random.people.person.Gender;
 import com.random.people.RandomBirthday;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
@@ -213,11 +213,11 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public Contact contact() throws RandomDataException {
+    public Contact contact(PersonName name) throws RandomDataException {
         final Address address = address();
         final Contact ret = new Contact(
                 address,
-                this.email(address.country()),
+                this.email(address.country(), name),
                 this.phoneNumber(address.country(), address.city()),
                 this.mobilePhoneNumber(address.country()));
         return ret;
@@ -303,8 +303,8 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String email(final Country country) {
-        return "user@" + country.name().english() + "." + country.codes().isoAlpha2().toLowerCase();
+    public String email(final Country country, final PersonName name) {
+        return name.givenNames().get(0) + "." + name.lastNames().get(0) + "@" + country.name().english().toLowerCase() + "." + country.codes().isoAlpha2().toLowerCase();
     }
 
     /**
