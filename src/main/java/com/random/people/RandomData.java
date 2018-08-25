@@ -26,6 +26,7 @@ import com.random.people.person.Country;
 import com.random.people.person.Gender;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
+import com.random.people.person.Traits;
 
 /**
  * Rs class.
@@ -83,7 +84,7 @@ public interface RandomData {
 
     /**
      * Comment.
-     * @return Ssn
+     * @return Unique person's identificator
      */
     String id(LocalDate birthday, City city, Gender gender);
 
@@ -154,4 +155,9 @@ public interface RandomData {
      * @return Email address
      */
     String email(Country country, PersonName name);
+
+    /**
+     * @return Person's traits
+     */
+    Traits traits();
 }

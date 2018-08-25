@@ -24,7 +24,7 @@ public class RandomDataGeneratorRESTService {
     private String supportedCountries;
 
     @GetMapping(value = "/generate/{countryCode}/person")
-    public ResponseEntity generateNewPerson(@PathVariable String countryCode) throws RandomDataException {
+    public ResponseEntity<Object> generateNewPerson(@PathVariable String countryCode) throws RandomDataException {
         try {
             validateCountryCode(countryCode);
         } catch (UnsupportedOperationException e){
@@ -35,7 +35,7 @@ public class RandomDataGeneratorRESTService {
     }
 
     @GetMapping(value = "/generate/{countryCode}/person/{numberOfNewPeople}")
-    public ResponseEntity generateMultipleNewPersons(@PathVariable String countryCode,
+    public ResponseEntity<Object> generateMultipleNewPersons(@PathVariable String countryCode,
                                                      @PathVariable String numberOfNewPeople) throws RandomDataException {
         try {
             validateCountryCode(countryCode);

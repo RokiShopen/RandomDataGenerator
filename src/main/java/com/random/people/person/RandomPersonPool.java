@@ -78,8 +78,9 @@ public final class RandomPersonPool implements PersonPool {
         final PersonName name = personName();
         final LocalDate birthday = birthday();
         final Contact contact = contact(name);
+        final Traits traits = traits();
         final String id = id(birthday, contact.address().city(), name.gender());
-        return new Person(name, birthday, contact, id);
+        return new Person(name, birthday, contact, traits, id);
     }
 
     private PersonName personName() throws RandomDataException {
@@ -90,11 +91,15 @@ public final class RandomPersonPool implements PersonPool {
         return this.randomData.dateOfBirth();
     }
 
-    private String id(final LocalDate birthday, final City city, final Gender gender) {
-        return this.randomData.id(birthday, city, gender);
-    }
-
     private Contact contact(final PersonName name) throws RandomDataException {
         return this.randomData.contact(name);
+    }
+
+    private Traits traits() throws RandomDataException {
+        return this.randomData.traits();
+    }
+
+    private String id(final LocalDate birthday, final City city, final Gender gender) {
+        return this.randomData.id(birthday, city, gender);
     }
 }

@@ -43,6 +43,7 @@ import com.random.people.person.CountryCodes;
 import com.random.people.person.CountryName;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
+import com.random.people.person.Traits;
 
 /**
  * Random data for Serbian language.
@@ -347,5 +348,14 @@ public final class RandomDataRs implements RandomData {
                         .getContextClassLoader()
                         .getResource(name).getFile()
         );
+    }
+
+    @Override
+    public Traits traits() {
+        final int height = this.rng.nextInt(150, 210);
+        final int weight = this.rng.nextInt(45, 130);
+        final int hairColor = this.rng.nextInt(15);
+        final int eyeColor = this.rng.nextInt(15);
+        return new Traits(height, weight, hairColor, eyeColor);
     }
 }

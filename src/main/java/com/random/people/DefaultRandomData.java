@@ -26,6 +26,7 @@ import com.random.people.person.Country;
 import com.random.people.person.Gender;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
+import com.random.people.person.Traits;
 
 /**
  * Random data for undefined language.
@@ -116,6 +117,12 @@ public final class DefaultRandomData implements RandomData {
 
     @Override
     public String email(final Country country, PersonName name) {
+        return null;
+    }
+
+    @Override
+    public Traits traits() {
+        // TODO Auto-generated method stub
         return null;
     }
 }

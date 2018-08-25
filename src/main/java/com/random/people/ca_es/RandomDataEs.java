@@ -25,6 +25,8 @@ import com.random.people.person.Contact;
 import com.random.people.person.Country;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
+import com.random.people.person.Traits;
+
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.List;
@@ -118,6 +120,12 @@ public final class RandomDataEs implements RandomData {
 
     @Override
     public String email(final Country country, PersonName name) {
+        return null;
+    }
+
+    @Override
+    public Traits traits() {
+        // TODO Auto-generated method stub
         return null;
     }
 }
