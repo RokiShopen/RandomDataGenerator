@@ -20,6 +20,7 @@ package com.random.people.ca_es;
 import com.random.people.person.Gender;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
+import com.random.people.person.Birthday;
 import com.random.people.person.City;
 import com.random.people.person.Contact;
 import com.random.people.person.Country;
@@ -69,7 +70,7 @@ public final class RandomDataEs implements RandomData {
     }
 
     @Override
-    public String id(final LocalDate birthday, final City city, final Gender gender) {
+    public String id(final Birthday birthday, final City city, final Gender gender) {
         return null;
     }
 
@@ -79,7 +80,7 @@ public final class RandomDataEs implements RandomData {
     }
 
     @Override
-    public LocalDate dateOfBirth() {
+    public Birthday birthday() {
         return null;
     }
 
@@ -125,7 +126,6 @@ public final class RandomDataEs implements RandomData {
 
     @Override
     public Traits traits() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

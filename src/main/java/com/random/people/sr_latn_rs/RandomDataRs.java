@@ -17,17 +17,6 @@
  */
 package com.random.people.sr_latn_rs;
 
-import java.io.File;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
-import java.util.Locale;
-
-import org.thejavaguy.prng.generators.PRNG;
-import org.thejavaguy.prng.generators.R250_521;
-
-import com.random.people.person.Gender;
 import com.random.people.RandomBirthday;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
@@ -35,15 +24,26 @@ import com.random.people.datafile.CachedDataFile;
 import com.random.people.datafile.DataFile;
 import com.random.people.datafile.Name;
 import com.random.people.person.Address;
+import com.random.people.person.Birthday;
+import com.random.people.person.Blood;
 import com.random.people.person.City;
 import com.random.people.person.CityCodes;
 import com.random.people.person.Contact;
 import com.random.people.person.Country;
 import com.random.people.person.CountryCodes;
 import com.random.people.person.CountryName;
+import com.random.people.person.Gender;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
 import com.random.people.person.Traits;
+import org.thejavaguy.prng.generators.PRNG;
+import org.thejavaguy.prng.generators.R250_521;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Random data for Serbian language.
@@ -191,7 +191,7 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public String id(final LocalDate birthday, final City city, final Gender gender) {
+    public String id(final Birthday birthday, final City city, final Gender gender) {
         return "DUMMY_ID";
     }
 
@@ -207,10 +207,10 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public LocalDate dateOfBirth() {
+    public Birthday birthday() {
         final int min = 18;
         final int max = 120;
-        return this.birthday.birthday(min, max);
+        return new Birthday(this.birthday.birthday(min, max));
     }
 
     @Override
@@ -356,6 +356,12 @@ public final class RandomDataRs implements RandomData {
         final int weight = this.rng.nextInt(45, 130);
         final int hairColor = this.rng.nextInt(15);
         final int eyeColor = this.rng.nextInt(15);
-        return new Traits(height, weight, hairColor, eyeColor);
+        Blood.Type[] bloodTypes = Blood.Type.values();
+        Blood.RhesusFactor[] rhesusFactors = Blood.RhesusFactor.values();
+        final Blood blood = new Blood(
+                bloodTypes[this.rng.nextInt(bloodTypes.length - 1)],
+                rhesusFactors[this.rng.nextInt(rhesusFactors.length - 1)]
+        );
+        return new Traits(height, weight, hairColor, eyeColor, blood);
     }
 }

@@ -26,11 +26,19 @@ repositories {
 dependencies {
     compile('org.thejavaguy:rng:0.1.0')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
+	annotationProcessor 'org.projectlombok:lombok:1.18.2'
     compileOnly('org.projectlombok:lombok:1.18.2')
+    testImplementation(
+        'org.junit.jupiter:junit-jupiter-api:5.2.0'
+    )
+    testRuntime(
+        'org.junit.jupiter:junit-jupiter-engine:5.2.0',
+        'org.junit.platform:junit-platform-launcher:1.1.0',
+    )  
+}
 
-    testCompile('org.junit:junit5-engine:5.0.0-ALPHA')
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+test {
+    useJUnitPlatform()
 }
 
 group = 'com.github.rokishopen'
@@ -38,7 +46,7 @@ archivesBaseName = "random-people"
 version = '0.0.1-SNAPSHOT'
 
 wrapper {
-    gradleVersion = '4.5.1'
+    gradleVersion = '4.9'
 }
 
 //signing {

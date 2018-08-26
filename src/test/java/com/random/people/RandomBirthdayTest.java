@@ -17,13 +17,13 @@
  */
 package com.random.people;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.thejavaguy.prng.generators.R250_521;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.thejavaguy.prng.generators.R250_521;
 
 /**
  * Test for RandomBirthday.
@@ -35,7 +35,7 @@ final class RandomBirthdayTest {
     private RandomBirthday sut;
     private static final int REPS = 10000;
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         this.sut = new RandomBirthday(new R250_521.Smart(new R250_521()));
     }

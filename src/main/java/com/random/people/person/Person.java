@@ -1,18 +1,16 @@
 package com.random.people.person;
 
-import java.time.LocalDate;
-
 /**
  * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  */
 public final class Person {
     private final PersonName personName;
-    private final LocalDate birthday;
+    private final Birthday birthday;
     private final Contact contact;
     private final Traits traits;
     private final String id;
 
-    public Person(PersonName personName, LocalDate birthday, Contact contact, Traits traits, String id) {
+    public Person(PersonName personName, Birthday birthday, Contact contact, Traits traits, String id) {
         this.personName = personName;
         this.birthday = birthday;
         this.contact = contact;
@@ -24,7 +22,7 @@ public final class Person {
         return this.personName;
     }
 
-    public LocalDate birthday() {
+    public Birthday birthday() {
         return this.birthday;
     }
 

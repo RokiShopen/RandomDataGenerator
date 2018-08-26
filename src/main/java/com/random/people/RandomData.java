@@ -17,9 +17,10 @@
  */
 package com.random.people;
 
-import java.time.LocalDate;
 import java.util.Currency;
 import java.util.List;
+
+import com.random.people.person.Birthday;
 import com.random.people.person.City;
 import com.random.people.person.Contact;
 import com.random.people.person.Country;
@@ -86,7 +87,7 @@ public interface RandomData {
      * Comment.
      * @return Unique person's identificator
      */
-    String id(LocalDate birthday, City city, Gender gender);
+    String id(Birthday birthday, City city, Gender gender);
 
     /**
      * Comment.
@@ -96,9 +97,9 @@ public interface RandomData {
 
     /**
      * Comment.
-     * @return Date of birth
+     * @return Person's birthday
      */
-    LocalDate dateOfBirth();
+    Birthday birthday();
 
     /**
      * Comment.

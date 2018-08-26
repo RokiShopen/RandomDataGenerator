@@ -20,6 +20,8 @@ package com.random.people;
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.List;
+
+import com.random.people.person.Birthday;
 import com.random.people.person.City;
 import com.random.people.person.Contact;
 import com.random.people.person.Country;
@@ -66,7 +68,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public String id(final LocalDate birthday, final City city, final Gender gender) {
+    public String id(final Birthday birthday, final City city, final Gender gender) {
         return null;
     }
 
@@ -76,7 +78,7 @@ public final class DefaultRandomData implements RandomData {
     }
 
     @Override
-    public LocalDate dateOfBirth() {
+    public Birthday birthday() {
         return null;
     }
 
@@ -122,7 +124,6 @@ public final class DefaultRandomData implements RandomData {
 
     @Override
     public Traits traits() {
-        // TODO Auto-generated method stub
         return null;
     }
 }
