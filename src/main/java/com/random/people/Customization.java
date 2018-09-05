@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
- * @author Ivan Milosavljevic ivan.milosavljevic@wirecard.com
+ * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  */
 @Configuration
 public class Customization {

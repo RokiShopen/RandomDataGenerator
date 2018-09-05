@@ -17,7 +17,7 @@
  */
 package com.random.people;
 
-import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
 
@@ -54,7 +54,7 @@ public final class DefaultRandomData implements RandomData {
 
     @Override
     public List<String> firstNames(final Gender gender, final int count) throws RandomDataException {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -64,7 +64,7 @@ public final class DefaultRandomData implements RandomData {
 
     @Override
     public List<String> lastNames(final int count) throws RandomDataException {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

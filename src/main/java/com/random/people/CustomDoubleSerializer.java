@@ -1,19 +1,18 @@
 package com.random.people;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+
 /**
- * @author Ivan Milosavljevic ivan.milosavljevic@wirecard.com
+ * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  */
 public final class CustomDoubleSerializer extends JsonSerializer<Double> {
     @Override
-    public void serialize(Double value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
+    public void serialize(Double value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         if (value == null) {
             jsonGenerator.writeNull();
         } else {

@@ -1,7 +1,7 @@
 package com.random.people.person;
 
 /**
- * @author Ivan Milosavljevic ivan.milosavljevic@wirecard.com
+ * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  */
 public final class Blood {
     public enum Type {
