@@ -12,7 +12,7 @@ public final class Birthday {
     }
 
     public LocalDate birthDate() {
-        return birthDate;
+        return this.birthDate;
     }
 
     @JsonGetter

@@ -35,6 +35,7 @@ import com.random.people.person.CountryName;
 import com.random.people.person.Gender;
 import com.random.people.person.MaritalStatus;
 import com.random.people.person.PersonName;
+import com.random.people.person.SocialMedia;
 import com.random.people.person.Street;
 import com.random.people.person.Traits;
 import org.thejavaguy.prng.generators.PRNG;
@@ -221,7 +222,9 @@ public final class RandomDataRs implements RandomData {
                 address,
                 this.email(address.country(), name),
                 this.phoneNumber(address.country(), address.city()),
-                this.mobilePhoneNumber(address.country()));
+                this.mobilePhoneNumber(address.country()),
+                this.socialMedia()
+                );
         return ret;
     }
 
@@ -297,6 +300,11 @@ public final class RandomDataRs implements RandomData {
                 .append(mobile[this.rng.nextInt(mobile.length - 1)])
                 .append(this.rng.nextInt(minimum, maximum));
         return ret.toString();
+    }
+    
+    @Override
+    public SocialMedia socialMedia() {
+        return new SocialMedia();
     }
 
     @Override

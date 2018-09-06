@@ -8,27 +8,33 @@ public final class Contact {
     private final String email;
     private final String landline;
     private final String mobile;
+    private final SocialMedia social;
 
-    public Contact(Address address, String email, String landline, String mobile) {
+    public Contact(Address address, String email, String landline, String mobile, SocialMedia social) {
         this.address = address;
         this.email = email;
         this.landline = landline;
         this.mobile = mobile;
+        this.social = social;
     }
 
     public Address address() {
-        return address;
+        return this.address;
     }
 
     public String email() {
-        return email;
+        return this.email;
     }
 
     public String landline() {
-        return landline;
+        return this.landline;
     }
 
     public String mobile() {
-        return mobile;
+        return this.mobile;
+    }
+    
+    public SocialMedia social() {
+        return this.social;
     }
 }

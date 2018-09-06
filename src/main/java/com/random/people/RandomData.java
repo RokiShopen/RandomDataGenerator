@@ -27,6 +27,7 @@ import com.random.people.person.Country;
 import com.random.people.person.Gender;
 import com.random.people.person.MaritalStatus;
 import com.random.people.person.PersonName;
+import com.random.people.person.SocialMedia;
 import com.random.people.person.Street;
 import com.random.people.person.Traits;
 
@@ -169,4 +170,10 @@ public interface RandomData {
      * @return Marital status
      */
     MaritalStatus status(Birthday birthday);
+
+    /**
+     * 
+     * @return Social media profiles
+     */
+    SocialMedia socialMedia();
 }
