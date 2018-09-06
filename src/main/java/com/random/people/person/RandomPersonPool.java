@@ -2,11 +2,11 @@ package com.random.people.person;
 
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
-import com.random.people.ca_es.RandomDataEs;
-import com.random.people.da_dk.RandomDataDk;
+//import com.random.people.ca_es.RandomDataEs;
+//import com.random.people.da_dk.RandomDataDk;
 import com.random.people.datafile.CachedDataFile;
 import com.random.people.datafile.Name;
-import com.random.people.en_us.RandomDataUs;
+//import com.random.people.en_us.RandomDataUs;
 import com.random.people.sr_latn_rs.RandomDataRs;
 import org.thejavaguy.prng.generators.PRNG;
 import org.thejavaguy.prng.generators.R250_521;
@@ -14,6 +14,8 @@ import org.thejavaguy.prng.generators.R250_521;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Locale;
+
+import javax.el.MethodNotFoundException;
 
 /**
  * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
@@ -42,14 +44,17 @@ public final class RandomPersonPool implements PersonPool {
                     rng, SERBIAN);
             return new RandomPersonPool(randomData);
         } else if (locale.equals(CATALAN)) {
-            final RandomData randomData = new RandomDataEs();
+/*            final RandomData randomData = new RandomDataEs();
             return new RandomPersonPool(randomData);
+*/            throw new MethodNotFoundException("");
         } else if (locale.equals(DANISH)) {
-            final RandomData randomData = new RandomDataDk();
+/*            final RandomData randomData = new RandomDataDk();
             return new RandomPersonPool(randomData);
+*/            throw new MethodNotFoundException("");
         } else {
-            final RandomData randomData = new RandomDataUs();
+/*            final RandomData randomData = new RandomDataUs();
             return new RandomPersonPool(randomData);
+*/            throw new MethodNotFoundException("");
         }
     }
 
@@ -78,9 +83,10 @@ public final class RandomPersonPool implements PersonPool {
         final PersonName name = personName();
         final Birthday birthday = birthday();
         final Contact contact = contact(name);
+        final MaritalStatus status = status(birthday);
         final Traits traits = traits();
         final String id = id(birthday, contact.address().city(), name.gender());
-        return new Person(name, birthday, contact, traits, id);
+        return new Person(name, birthday, contact, status, traits, id);
     }
 
     private PersonName personName() throws RandomDataException {
@@ -93,6 +99,10 @@ public final class RandomPersonPool implements PersonPool {
 
     private Contact contact(final PersonName name) throws RandomDataException {
         return this.randomData.contact(name);
+    }
+    
+    private MaritalStatus status(final Birthday birthday) {
+        return this.randomData.status(birthday);
     }
 
     private Traits traits() throws RandomDataException {

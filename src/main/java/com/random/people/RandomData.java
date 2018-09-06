@@ -25,6 +25,7 @@ import com.random.people.person.City;
 import com.random.people.person.Contact;
 import com.random.people.person.Country;
 import com.random.people.person.Gender;
+import com.random.people.person.MaritalStatus;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
 import com.random.people.person.Traits;
@@ -161,4 +162,11 @@ public interface RandomData {
      * @return Person's traits
      */
     Traits traits();
+
+    /**
+     * 
+     * @param birthday Person's birthday
+     * @return Marital status
+     */
+    MaritalStatus status(Birthday birthday);
 }

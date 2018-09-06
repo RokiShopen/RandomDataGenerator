@@ -33,6 +33,7 @@ import com.random.people.person.Country;
 import com.random.people.person.CountryCodes;
 import com.random.people.person.CountryName;
 import com.random.people.person.Gender;
+import com.random.people.person.MaritalStatus;
 import com.random.people.person.PersonName;
 import com.random.people.person.Street;
 import com.random.people.person.Traits;
@@ -363,5 +364,11 @@ public final class RandomDataRs implements RandomData {
                 rhesusFactors[this.rng.nextInt(rhesusFactors.length - 1)]
         );
         return new Traits(height, weight, hairColor, eyeColor, blood);
+    }
+
+    @Override
+    public MaritalStatus status(final Birthday birthday) {
+        MaritalStatus[] statuses = MaritalStatus.values();
+        return statuses[this.rng.nextInt(statuses.length - 1)];
     }
 }

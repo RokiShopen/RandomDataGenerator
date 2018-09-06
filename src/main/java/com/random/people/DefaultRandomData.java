@@ -36,7 +36,7 @@ import com.random.people.person.Traits;
  * @version $Id$
  * @since 0.0.1
  */
-public final class DefaultRandomData implements RandomData {
+/*public final class DefaultRandomData implements RandomData {
     @Override
     public PersonName personName() throws RandomDataException {
         return null;
@@ -127,3 +127,4 @@ public final class DefaultRandomData implements RandomData {
         return null;
     }
 }
+*/
