@@ -216,14 +216,14 @@ public final class RandomDataRs implements RandomData {
     }
 
     @Override
-    public Contact contact(PersonName name) throws RandomDataException {
+    public Contact contact(Birthday birthday, PersonName name) throws RandomDataException {
         final Address address = address();
         final Contact ret = new Contact(
                 address,
                 this.email(address.country(), name),
                 this.phoneNumber(address.country(), address.city()),
                 this.mobilePhoneNumber(address.country()),
-                this.socialMedia()
+                this.socialMedia(birthday, name)
                 );
         return ret;
     }
@@ -301,10 +301,10 @@ public final class RandomDataRs implements RandomData {
                 .append(this.rng.nextInt(minimum, maximum));
         return ret.toString();
     }
-    
+
     @Override
-    public SocialMedia socialMedia() {
-        return new SocialMedia();
+    public SocialMedia socialMedia(final Birthday birthday, final PersonName name) {
+        return new SocialMedia(birthday, name, this.rng);
     }
 
     @Override

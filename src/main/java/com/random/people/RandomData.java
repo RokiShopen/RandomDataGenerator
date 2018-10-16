@@ -108,7 +108,7 @@ public interface RandomData {
      * @return Contact details
      * @param name
      */
-    Contact contact(PersonName name) throws RandomDataException;
+    Contact contact(Birthday birthday, PersonName name) throws RandomDataException;
 
     /**
      * Comment.
@@ -145,6 +145,8 @@ public interface RandomData {
      */
     String mobilePhoneNumber(Country country);
 
+    SocialMedia socialMedia(Birthday birthday, PersonName name);
+
     /**
      * Comment.
      * @return Currency
@@ -165,15 +167,9 @@ public interface RandomData {
     Traits traits();
 
     /**
-     * 
+     *
      * @param birthday Person's birthday
      * @return Marital status
      */
     MaritalStatus status(Birthday birthday);
-
-    /**
-     * 
-     * @return Social media profiles
-     */
-    SocialMedia socialMedia();
 }
