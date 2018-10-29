@@ -25,6 +25,7 @@ repositories {
 }
 dependencies {
     compile('org.thejavaguy:rng:0.1.0')
+    compile('org.springframework.boot:spring-boot-starter-parent')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
 	annotationProcessor 'org.projectlombok:lombok:1.18.2'
     compileOnly('org.projectlombok:lombok:1.18.2')

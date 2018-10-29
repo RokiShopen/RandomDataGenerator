@@ -1,6 +1,8 @@
 package com.random.people.api;
 
 import com.random.people.RandomDataException;
+import com.random.people.model.RDGErrorIds;
+import com.random.people.model.RDGResponseBody;
 import com.random.people.person.Person;
 import com.random.people.person.PersonPool;
 import com.random.people.person.RandomPersonPool;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.InvalidParameterException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -24,34 +27,29 @@ public class RandomDataGeneratorRESTService {
     private String supportedCountries;
 
     @GetMapping(value = "/generate/{countryCode}/person")
-    public ResponseEntity<Object> generateNewPerson(@PathVariable String countryCode) throws RandomDataException {
-        try {
-            validateCountryCode(countryCode);
-        } catch (UnsupportedOperationException e){
-            return ResponseEntity.badRequest().body("Invalid country code");
-        }
-
-        return ResponseEntity.ok().body(getPerson(countryCode));
+    public ResponseEntity generateNewPerson(@PathVariable String countryCode) throws RandomDataException {
+        return generatePersons(countryCode, 1);
     }
 
     @GetMapping(value = "/generate/{countryCode}/person/{numberOfNewPeople}")
-    public ResponseEntity<Object> generateMultipleNewPersons(@PathVariable String countryCode,
-                                                     @PathVariable String numberOfNewPeople) throws RandomDataException {
+    public ResponseEntity generateMultipleNewPersons(@PathVariable String countryCode,
+                                                     @PathVariable Integer numberOfNewPeople) throws RandomDataException {
+        return generatePersons(countryCode, numberOfNewPeople);
+    }
+
+    private ResponseEntity generatePersons(String countryCode, int numberOfNewPeople) throws RandomDataException {
+        if (numberOfNewPeople < 1 || numberOfNewPeople > 100) {
+            return ResponseEntity.badRequest().body(new RDGResponseBody(RDGErrorIds.INVALID_RANGE,
+                    "Number of people must be between 1 and 100"));
+        }
         try {
             validateCountryCode(countryCode);
-        } catch (UnsupportedOperationException e){
-            return ResponseEntity.badRequest().body("Invalid country code");
+        } catch (InvalidParameterException e){
+            return ResponseEntity.badRequest().body(new RDGResponseBody(RDGErrorIds.INVALID_COUNTRY_CODE, e.getMessage()));
         }
 
-        int number = 0;
-        if (numberOfNewPeople != null && !numberOfNewPeople.isEmpty()) {
-            number = Integer.valueOf(numberOfNewPeople);
-        }
-        if (number == 0 || number > 100) {
-            return ResponseEntity.badRequest().body("Number of people must be between 1 and 100");
-        }
         List<Person> persons = new LinkedList<>();
-        for (int i = 0; i < number; i++){
+        for (int i = 0; i < numberOfNewPeople; i++){
             persons.add(getPerson(countryCode));
         }
 
@@ -65,11 +63,11 @@ public class RandomDataGeneratorRESTService {
     }
 
     private void validateCountryCode(String countryCode){
-        if ( !supportedCountries.toUpperCase().contains(countryCode.toUpperCase()) ){
-            log.info("Country code:'{}' is not supported. Supported codes are:'{}'",
-                    countryCode.toUpperCase(),
-                    supportedCountries.toUpperCase());
-            throw new UnsupportedOperationException();
+        if ( countryCode.length() < 2 || !supportedCountries.toUpperCase().contains(countryCode.toUpperCase()) ){
+            String message = "Country code:'"+countryCode.toUpperCase()
+                    +"' is not supported. Supported codes are:'"+supportedCountries.toUpperCase()+"'";
+            log.info(message);
+            throw new InvalidParameterException(message);
         }
         log.info("Country code:'{}' is supported.", countryCode.toUpperCase());
     }
