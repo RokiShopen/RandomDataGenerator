@@ -1,8 +1,13 @@
-package com.random.people.person;
+package com.random.people.person.biological;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
  */
+@Getter
+@AllArgsConstructor
 public final class Blood {
     public enum Type {
         A,
@@ -18,17 +23,4 @@ public final class Blood {
 
     private Type type;
     private RhesusFactor rh;
-
-    public Blood(Type type, RhesusFactor rh) {
-        this.type = type;
-        this.rh = rh;
-    }
-
-    public Type type() {
-        return type;
-    }
-
-    public RhesusFactor rh() {
-        return rh;
-    }
 }

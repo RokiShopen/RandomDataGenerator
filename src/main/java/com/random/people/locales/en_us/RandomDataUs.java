@@ -15,7 +15,7 @@
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people.en_us;
+package com.random.people.locales.en_us;
 
 import java.util.Collections;
 import java.util.Currency;
@@ -23,14 +23,15 @@ import java.util.List;
 
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
-import com.random.people.person.Birthday;
-import com.random.people.person.City;
-import com.random.people.person.Contact;
-import com.random.people.person.Country;
-import com.random.people.person.Gender;
-import com.random.people.person.PersonName;
-import com.random.people.person.Street;
-import com.random.people.person.Traits;
+import com.random.people.person.personal.Birthday;
+import com.random.people.person.address.City;
+import com.random.people.person.personal.Contact;
+import com.random.people.person.address.Country;
+import com.random.people.person.biological.Gender;
+import com.random.people.person.personal.MaritalStatus;
+import com.random.people.person.personal.PersonName;
+import com.random.people.person.address.Street;
+import com.random.people.person.biological.Traits;
 
 /**
  * Random data for English language.
@@ -38,7 +39,7 @@ import com.random.people.person.Traits;
  * @version $Id$
  * @since 0.0.1
  */
-/*public final class RandomDataUs implements RandomData {
+public final class RandomDataUs implements RandomData {
     @Override
     public PersonName personName() throws RandomDataException {
         return null;
@@ -128,5 +129,9 @@ import com.random.people.person.Traits;
     public Traits traits() {
         return null;
     }
+
+    @Override
+    public MaritalStatus status(Birthday birthday) {
+        return null;
+    }
 }
-*/

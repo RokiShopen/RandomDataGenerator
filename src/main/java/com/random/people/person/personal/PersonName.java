@@ -1,4 +1,6 @@
-package com.random.people.person;
+package com.random.people.person.personal;
+
+import com.random.people.person.biological.Gender;
 
 import java.util.ArrayList;
 import java.util.Collections;

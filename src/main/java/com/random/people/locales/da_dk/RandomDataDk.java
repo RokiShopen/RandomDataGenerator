@@ -15,22 +15,7 @@
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people.da_dk;
-
-import java.util.Collections;
-import java.util.Currency;
-import java.util.List;
-
-import com.random.people.RandomData;
-import com.random.people.RandomDataException;
-import com.random.people.person.Birthday;
-import com.random.people.person.City;
-import com.random.people.person.Contact;
-import com.random.people.person.Country;
-import com.random.people.person.Gender;
-import com.random.people.person.PersonName;
-import com.random.people.person.Street;
-import com.random.people.person.Traits;
+package com.random.people.locales.da_dk;
 
 /**
  * Random data for Danish language.

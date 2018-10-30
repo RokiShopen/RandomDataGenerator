@@ -1,7 +1,8 @@
-package com.random.people.person;
+package com.random.people.person.biological;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.random.people.CustomDoubleSerializer;
+import com.random.people.person.biological.Blood;
 
 public final class Traits {
     private final int height;

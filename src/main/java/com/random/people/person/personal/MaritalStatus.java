@@ -1,4 +1,4 @@
-package com.random.people.person;
+package com.random.people.person.personal;
 
 /**
  * @author Ivan Milosavljevic (TheJavaGuy@yandex.com)
