@@ -14,12 +14,12 @@ public class RandomDataGeneratorRESTService {
 
     private final PersonGenerator generator = new PersonGenerator();
 
-    @GetMapping(value = "/generate/{countryCode}/person")
+    @GetMapping(value = "/{countryCode}/person")
     public ResponseEntity generatePerson(@PathVariable String countryCode) throws RandomDataException {
         return generator.generatePersons(countryCode, 1);
     }
 
-    @GetMapping(value = "/generate/{countryCode}/person/{numberOfPeople}")
+    @GetMapping(value = "/{countryCode}/person/{numberOfPeople}")
     public ResponseEntity generateMultiplePersons(@PathVariable String countryCode,
                                                      @PathVariable Integer numberOfPeople) throws RandomDataException {
         return generator.generatePersons(countryCode, numberOfPeople);
