@@ -29,6 +29,16 @@ import com.random.people.person.personal.MaritalStatus;
 import com.random.people.person.personal.PersonName;
 import com.random.people.person.address.Street;
 import com.random.people.person.biological.Traits;
+import com.random.people.person.Birthday;
+import com.random.people.person.City;
+import com.random.people.person.Contact;
+import com.random.people.person.Country;
+import com.random.people.person.Gender;
+import com.random.people.person.MaritalStatus;
+import com.random.people.person.PersonName;
+import com.random.people.person.SocialMedia;
+import com.random.people.person.Street;
+import com.random.people.person.Traits;
 
 /**
  * Rs class.
@@ -107,7 +117,7 @@ public interface RandomData {
      * @return Contact details
      * @param name
      */
-    Contact contact(PersonName name) throws RandomDataException;
+    Contact contact(Birthday birthday, PersonName name) throws RandomDataException;
 
     /**
      * Comment.
@@ -144,6 +154,8 @@ public interface RandomData {
      */
     String mobilePhoneNumber(Country country);
 
+    SocialMedia socialMedia(Birthday birthday, PersonName name);
+
     /**
      * Comment.
      * @return Currency
@@ -164,7 +176,7 @@ public interface RandomData {
     Traits traits();
 
     /**
-     * 
+     *
      * @param birthday Person's birthday
      * @return Marital status
      */

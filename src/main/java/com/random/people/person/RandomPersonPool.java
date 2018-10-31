@@ -80,7 +80,7 @@ public final class RandomPersonPool implements PersonPool {
     public Person next() throws RandomDataException {
         final PersonName name = personName();
         final Birthday birthday = birthday();
-        final Contact contact = contact(name);
+        final Contact contact = contact(birthday, name);
         final MaritalStatus status = status(birthday);
         final Traits traits = traits();
         final String id = id(birthday, contact.getAddress().getCity(), name.gender());
@@ -100,8 +100,8 @@ public final class RandomPersonPool implements PersonPool {
         return this.randomData.birthday();
     }
 
-    private Contact contact(final PersonName name) throws RandomDataException {
-        return this.randomData.contact(name);
+    private Contact contact(final Birthday birthday, final PersonName name) throws RandomDataException {
+        return this.randomData.contact(birthday, name);
     }
 
     private MaritalStatus status(final Birthday birthday) {
