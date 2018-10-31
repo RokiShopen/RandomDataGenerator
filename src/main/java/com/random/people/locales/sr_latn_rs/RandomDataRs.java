@@ -15,33 +15,29 @@
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people.sr_latn_rs;
+package com.random.people.locales.sr_latn_rs;
 
 import com.random.people.RandomBirthday;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
-import com.random.people.datafile.CachedDataFile;
 import com.random.people.datafile.DataFile;
-import com.random.people.datafile.Name;
-import com.random.people.person.Address;
-import com.random.people.person.Birthday;
-import com.random.people.person.Blood;
-import com.random.people.person.City;
-import com.random.people.person.CityCodes;
-import com.random.people.person.Contact;
-import com.random.people.person.Country;
-import com.random.people.person.CountryCodes;
-import com.random.people.person.CountryName;
-import com.random.people.person.Gender;
-import com.random.people.person.MaritalStatus;
-import com.random.people.person.PersonName;
 import com.random.people.person.SocialMedia;
-import com.random.people.person.Street;
-import com.random.people.person.Traits;
+import com.random.people.person.address.Address;
+import com.random.people.person.address.City;
+import com.random.people.person.address.CityCodes;
+import com.random.people.person.address.Country;
+import com.random.people.person.address.CountryCodes;
+import com.random.people.person.address.CountryName;
+import com.random.people.person.address.Street;
+import com.random.people.person.biological.Blood;
+import com.random.people.person.biological.Gender;
+import com.random.people.person.biological.Traits;
+import com.random.people.person.personal.Birthday;
+import com.random.people.person.personal.Contact;
+import com.random.people.person.personal.MaritalStatus;
+import com.random.people.person.personal.PersonName;
 import org.thejavaguy.prng.generators.PRNG;
-import org.thejavaguy.prng.generators.R250_521;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -218,22 +214,19 @@ public final class RandomDataRs implements RandomData {
     @Override
     public Contact contact(Birthday birthday, PersonName name) throws RandomDataException {
         final Address address = address();
-        final Contact ret = new Contact(
+        return new Contact(
                 address,
-                this.email(address.country(), name),
-                this.phoneNumber(address.country(), address.city()),
-                this.mobilePhoneNumber(address.country()),
-                this.socialMedia(birthday, name)
-                );
-        return ret;
+                this.email(address.getCountry(), name).toLowerCase(),
+                this.phoneNumber(address.getCountry(), address.getCity()),
+                this.mobilePhoneNumber(address.getCountry()),
+                this.socialMedia(birthday, name));
     }
 
     private Address address() throws RandomDataException {
         final Street street = this.street();
         final City city = this.cityX();
         final Country country = this.country();
-        final Address ret = new Address(street, city, country);
-        return ret;
+        return new Address(street, city, country);
     }
 
     @Override
@@ -282,8 +275,8 @@ public final class RandomDataRs implements RandomData {
         final StringBuilder ret = new StringBuilder();
         ret
                 .append("+")
-                .append(country.codes().phone())
-                .append(city.codes().phone())
+                .append(country.getCodes().phone())
+                .append(city.getCodes().getPhone())
                 .append(this.rng.nextInt(minimum, maximum));
         return ret.toString();
     }
@@ -292,11 +285,11 @@ public final class RandomDataRs implements RandomData {
     public String mobilePhoneNumber(final Country country) {
         final int minimum = 1000000;
         final int maximum = 9999999;
-        final int[] mobile = country.codes().mobile();
+        final int[] mobile = country.getCodes().mobile();
         final StringBuilder ret = new StringBuilder();
         ret
                 .append("+")
-                .append(country.codes().phone())
+                .append(country.getCodes().phone())
                 .append(mobile[this.rng.nextInt(mobile.length - 1)])
                 .append(this.rng.nextInt(minimum, maximum));
         return ret.toString();
@@ -314,49 +307,8 @@ public final class RandomDataRs implements RandomData {
 
     @Override
     public String email(final Country country, final PersonName name) {
-        return name.givenNames().get(0) + "." + name.lastNames().get(0) + "@" + country.name().english().toLowerCase() + "." + country.codes().isoAlpha2().toLowerCase();
-    }
-
-    /**
-     * Temporary main method for spiking purposes.
-     * @param args Program arguments
-     * @throws Exception If there is a problem when reading data from resource
-     *  file(s)
-     */
-    public static void main(final String[] args) throws Exception {
-        final PRNG.Smart rng = new R250_521.Smart(new R250_521());
-        final RandomDataRs serbian = new RandomDataRs(
-                new CachedDataFile(resourceFile(named("firstNameMale.txt")), rng),
-                new CachedDataFile(resourceFile(named("firstNameFemale.txt")), rng),
-                new CachedDataFile(resourceFile(named("lastName.txt")), rng),
-                new CachedDataFile(resourceFile(named("namePrefix.txt")), rng),
-                new CachedDataFile(resourceFile(named("cities.txt")), rng),
-                new CachedDataFile(resourceFile(named("streets.txt")), rng),
-                rng,
-                new Locale("sr", "RS", "Latn")
-        );
-    }
-
-    /**
-     * Syntactic sugar for obtaining name of resource file.
-     * @param filename Resource file name
-     * @return Properly formatted name of a resource file
-     */
-    private static String named(final String filename) {
-        return new Name(new Locale("sr", "RS", "Latn"), filename).name();
-    }
-
-    /**
-     * Returns a handle to a resource file.
-     * @param name PersonName of the file
-     * @return A handle to a resource file
-     */
-    private static File resourceFile(final String name) {
-        return new File(
-                Thread.currentThread()
-                        .getContextClassLoader()
-                        .getResource(name).getFile()
-        );
+        return name.givenNames().get(0) + "." + name.lastNames().get(0) + "@"
+                + country.getName().getEnglish().toLowerCase() + "." + country.getCodes().isoAlpha2().toLowerCase();
     }
 
     @Override

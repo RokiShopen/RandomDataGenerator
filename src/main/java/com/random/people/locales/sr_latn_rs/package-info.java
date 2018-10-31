@@ -15,21 +15,4 @@
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people.person;
-
-/**
- * Random data enum that is used for different genders.
- * @author Aleksandar Marinkovic (marinkovic.aleksandarr@gmail.com)
- * @version $Id$
- * @since 0.0.1
- */
-public enum Gender {
-    /**
-     * Males.
-     */
-    MALE,
-    /**
-     * Females.
-     */
-    FEMALE
-}
+package com.random.people.locales.sr_latn_rs;

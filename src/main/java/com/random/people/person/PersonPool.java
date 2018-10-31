@@ -7,4 +7,5 @@ import com.random.people.RandomDataException;
  */
 public interface PersonPool {
     Person next() throws RandomDataException;
+    Person empty() throws RandomDataException;
 }

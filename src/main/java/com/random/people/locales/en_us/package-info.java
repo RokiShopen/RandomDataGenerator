@@ -15,4 +15,4 @@
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package com.random.people.sr_latn_rs;
+package com.random.people.locales.en_us;

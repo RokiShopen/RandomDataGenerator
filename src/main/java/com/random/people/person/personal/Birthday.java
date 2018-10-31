@@ -1,19 +1,15 @@
-package com.random.people.person;
+package com.random.people.person.personal;
 
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public final class Birthday {
     private final LocalDate birthDate;
-
-    public Birthday(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public LocalDate birthDate() {
-        return this.birthDate;
-    }
 
     @JsonGetter
     public ZodiacSign zodiacSign() {

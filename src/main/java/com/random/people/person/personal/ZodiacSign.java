@@ -1,4 +1,4 @@
-package com.random.people.person;
+package com.random.people.person.personal;
 
 import com.random.people.LocalDateRange;
 

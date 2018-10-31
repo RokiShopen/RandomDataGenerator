@@ -17,19 +17,6 @@
  */
 package com.random.people;
 
-import java.util.Collections;
-import java.util.Currency;
-import java.util.List;
-
-import com.random.people.person.Birthday;
-import com.random.people.person.City;
-import com.random.people.person.Contact;
-import com.random.people.person.Country;
-import com.random.people.person.Gender;
-import com.random.people.person.PersonName;
-import com.random.people.person.Street;
-import com.random.people.person.Traits;
-
 /**
  * Random data for undefined language.
  * @author Aleksandar Marinkovic (marinkovic.aleksandarr@gmail.com)

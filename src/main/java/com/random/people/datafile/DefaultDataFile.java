@@ -1,16 +1,16 @@
 /**
  * This file is part of Random data generator.
- *
+ * <p>
  * Random data generator is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Random data generator is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Random data generator.
  * If not, see <http://www.gnu.org/licenses/>.
@@ -18,6 +18,7 @@
 package com.random.people.datafile;
 
 import com.random.people.RandomDataException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +29,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.thejavaguy.prng.generators.PRNG;
 
 /**
@@ -78,22 +80,7 @@ public final class DefaultDataFile implements DataFile {
     @Override
     public String randomLine() throws RandomDataException {
         final List<String> lines = new ArrayList<>(NUM_LINES);
-        try (InputStream in = new FileInputStream(this.origin);
-            Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-            BufferedReader reader = new BufferedReader(rdr)) {
-            for (;;) {
-                final String line = reader.readLine();
-                if (line == null) {
-                    break;
-                }
-                final String trimmed = line.trim();
-                if (!trimmed.isEmpty()) {
-                lines.add(line);
-            }
-            }
-        } catch (final IOException ex) {
-            throw new RandomDataException(errorMessage(ex), ex);
-        }
+        fillLines(lines);
         final int index = this.rng.nextInt(0, lines.size() - 1);
         return lines.get(index);
     }
@@ -101,23 +88,27 @@ public final class DefaultDataFile implements DataFile {
     @Override
     public String specificLine(final int index) throws RandomDataException {
         final List<String> lines = new ArrayList<>(NUM_LINES);
+        fillLines(lines);
+        return lines.get(index);
+    }
+
+    private void fillLines(List<String> lines) throws RandomDataException {
         try (InputStream in = new FileInputStream(this.origin);
-            Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
-            BufferedReader reader = new BufferedReader(rdr)) {
-            for (;;) {
+             Reader rdr = new InputStreamReader(in, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(rdr)) {
+            for (; ; ) {
                 final String line = reader.readLine();
                 if (line == null) {
                     break;
                 }
                 final String trimmed = line.trim();
                 if (!trimmed.isEmpty()) {
-                lines.add(line);
+                    lines.add(line);
                 }
             }
         } catch (final IOException ex) {
             throw new RandomDataException(errorMessage(ex), ex);
         }
-        return lines.get(index);
     }
 
     /**
