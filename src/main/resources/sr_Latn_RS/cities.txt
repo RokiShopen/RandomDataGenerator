@@ -1,27 +1,28 @@
+Pirot;10;18300
 Beograd;11;11000
-Novi Sad;21;21000
-Priština
+Požarevac;12;12000
+Pančevo;13;26000
+Valjevo;14;14000
+Šabac;15;15000
+Leskovac;16;16000
+Vranje;17;17500
 Niš;18;18000
+Zaječar;19;19000
+Novi Pazar;20;36300
+Novi Sad;21;21000
+Sremska Mitrovica;22;22000
+Zrenjanin;23;23000
+Kikinda;230;23300
+Subotica;24;24000
+Sombor;25;25000
+Smederevo;26;11300
+Prokuplje;27;18400
+Kosovska Mitrovica;28;38220
+Bor;30;19210
+Užice;31;31000
+Čačak;32;32000
+Prijepolje;33;31300
 Kragujevac;34;34000
-Subotica
-Pančevo
-Zrenjanin
-Čačak
-Kraljevo
-Novi Pazar
-Leskovac
-Smederevo
-Vranje
-Užice
-Valjevo
-Kruševac
-Šabac
-Požarevac
-Sombor
-Pirot
-Zaječar
-Kikinda
-Sremska Mitrovica
-Jagodina
-Vršac
-Loznica
+Jagodina;35;35000
+Kraljevo;36;36000
+Kruševac;37;37000
