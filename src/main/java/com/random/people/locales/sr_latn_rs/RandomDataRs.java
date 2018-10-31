@@ -21,36 +21,21 @@ import com.random.people.RandomBirthday;
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
 import com.random.people.datafile.DataFile;
+import com.random.people.person.SocialMedia;
 import com.random.people.person.address.Address;
-import com.random.people.person.personal.Birthday;
-import com.random.people.person.biological.Blood;
 import com.random.people.person.address.City;
 import com.random.people.person.address.CityCodes;
-import com.random.people.person.personal.Contact;
 import com.random.people.person.address.Country;
 import com.random.people.person.address.CountryCodes;
 import com.random.people.person.address.CountryName;
+import com.random.people.person.address.Street;
+import com.random.people.person.biological.Blood;
 import com.random.people.person.biological.Gender;
+import com.random.people.person.biological.Traits;
+import com.random.people.person.personal.Birthday;
+import com.random.people.person.personal.Contact;
 import com.random.people.person.personal.MaritalStatus;
 import com.random.people.person.personal.PersonName;
-import com.random.people.person.address.Street;
-import com.random.people.person.biological.Traits;
-import com.random.people.datafile.Name;
-import com.random.people.person.Address;
-import com.random.people.person.Birthday;
-import com.random.people.person.Blood;
-import com.random.people.person.City;
-import com.random.people.person.CityCodes;
-import com.random.people.person.Contact;
-import com.random.people.person.Country;
-import com.random.people.person.CountryCodes;
-import com.random.people.person.CountryName;
-import com.random.people.person.Gender;
-import com.random.people.person.MaritalStatus;
-import com.random.people.person.PersonName;
-import com.random.people.person.SocialMedia;
-import com.random.people.person.Street;
-import com.random.people.person.Traits;
 import org.thejavaguy.prng.generators.PRNG;
 
 import java.util.ArrayList;
@@ -231,15 +216,10 @@ public final class RandomDataRs implements RandomData {
         final Address address = address();
         return new Contact(
                 address,
-                this.email(address.getCountry(), name),
+                this.email(address.getCountry(), name).toLowerCase(),
                 this.phoneNumber(address.getCountry(), address.getCity()),
-                this.mobilePhoneNumber(address.getCountry()));
-                this.email(address.country(), name),
-                this.phoneNumber(address.country(), address.city()),
-                this.mobilePhoneNumber(address.country()),
-                this.socialMedia(birthday, name)
-                );
-        return ret;
+                this.mobilePhoneNumber(address.getCountry()),
+                this.socialMedia(birthday, name));
     }
 
     private Address address() throws RandomDataException {

@@ -1,5 +1,6 @@
-package com.random.people.person;
+package com.random.people.person.personal;
 
+import com.random.people.person.SocialMedia;
 import com.random.people.person.address.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

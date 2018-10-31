@@ -17,28 +17,19 @@
  */
 package com.random.people;
 
-import java.util.Currency;
-import java.util.List;
-
-import com.random.people.person.personal.Birthday;
+import com.random.people.person.SocialMedia;
 import com.random.people.person.address.City;
-import com.random.people.person.personal.Contact;
 import com.random.people.person.address.Country;
+import com.random.people.person.address.Street;
 import com.random.people.person.biological.Gender;
+import com.random.people.person.biological.Traits;
+import com.random.people.person.personal.Birthday;
+import com.random.people.person.personal.Contact;
 import com.random.people.person.personal.MaritalStatus;
 import com.random.people.person.personal.PersonName;
-import com.random.people.person.address.Street;
-import com.random.people.person.biological.Traits;
-import com.random.people.person.Birthday;
-import com.random.people.person.City;
-import com.random.people.person.Contact;
-import com.random.people.person.Country;
-import com.random.people.person.Gender;
-import com.random.people.person.MaritalStatus;
-import com.random.people.person.PersonName;
-import com.random.people.person.SocialMedia;
-import com.random.people.person.Street;
-import com.random.people.person.Traits;
+
+import java.util.Currency;
+import java.util.List;
 
 /**
  * Rs class.

@@ -23,6 +23,7 @@ import java.util.List;
 
 import com.random.people.RandomData;
 import com.random.people.RandomDataException;
+import com.random.people.person.SocialMedia;
 import com.random.people.person.personal.Birthday;
 import com.random.people.person.address.City;
 import com.random.people.person.personal.Contact;
@@ -86,7 +87,7 @@ public final class RandomDataUs implements RandomData {
     }
 
     @Override
-    public Contact contact(PersonName name) throws RandomDataException {
+    public Contact contact(Birthday birthday, PersonName name) throws RandomDataException {
         return null;
     }
 
@@ -112,6 +113,11 @@ public final class RandomDataUs implements RandomData {
 
     @Override
     public String mobilePhoneNumber(final Country country) {
+        return null;
+    }
+
+    @Override
+    public SocialMedia socialMedia(Birthday birthday, PersonName name) {
         return null;
     }
 

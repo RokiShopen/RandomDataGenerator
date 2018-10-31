@@ -1,5 +1,7 @@
 package com.random.people.person;
 
+import com.random.people.person.personal.Birthday;
+import com.random.people.person.personal.PersonName;
 import org.thejavaguy.prng.generators.PRNG;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -145,7 +147,7 @@ public class SocialMedia {
     }
     
     private String birthYear4() {
-        return String.valueOf(this.birthday.birthDate().getYear());
+        return String.valueOf(this.birthday.getBirthDate().getYear());
     }
     
     private String shortened(final String origin, final int maxLength) {
