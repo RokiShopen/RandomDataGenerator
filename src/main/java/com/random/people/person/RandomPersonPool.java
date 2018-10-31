@@ -12,7 +12,6 @@ import org.thejavaguy.prng.generators.PRNG;
 import org.thejavaguy.prng.generators.R250_521;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.util.Locale;
 
 import javax.el.MethodNotFoundException;
@@ -82,7 +81,7 @@ public final class RandomPersonPool implements PersonPool {
     public Person next() throws RandomDataException {
         final PersonName name = personName();
         final Birthday birthday = birthday();
-        final Contact contact = contact(name);
+        final Contact contact = contact(birthday, name);
         final MaritalStatus status = status(birthday);
         final Traits traits = traits();
         final String id = id(birthday, contact.address().city(), name.gender());
@@ -97,10 +96,10 @@ public final class RandomPersonPool implements PersonPool {
         return this.randomData.birthday();
     }
 
-    private Contact contact(final PersonName name) throws RandomDataException {
-        return this.randomData.contact(name);
+    private Contact contact(final Birthday birthday, final PersonName name) throws RandomDataException {
+        return this.randomData.contact(birthday, name);
     }
-    
+
     private MaritalStatus status(final Birthday birthday) {
         return this.randomData.status(birthday);
     }
