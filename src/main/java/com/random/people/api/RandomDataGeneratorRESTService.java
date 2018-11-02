@@ -2,6 +2,7 @@ package com.random.people.api;
 
 import com.random.people.RandomDataException;
 import com.random.people.generators.PersonGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/rest/v1")
 public class RandomDataGeneratorRESTService {
 
-    private final PersonGenerator generator = new PersonGenerator();
+    private final PersonGenerator generator;
+
+    @Autowired
+    public RandomDataGeneratorRESTService(PersonGenerator generator) {
+        this.generator = generator;
+    }
 
     @GetMapping(value = "/{countryCode}/person")
     public ResponseEntity generatePerson(@PathVariable String countryCode) throws RandomDataException {

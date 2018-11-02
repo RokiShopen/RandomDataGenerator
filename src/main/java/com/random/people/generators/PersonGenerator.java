@@ -6,6 +6,7 @@ import com.random.people.model.RDGResponseBody;
 import com.random.people.person.Person;
 import com.random.people.person.RandomPersonPool;
 import com.random.people.validator.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import java.security.InvalidParameterException;
@@ -15,7 +16,8 @@ import java.util.Locale;
 
 public class PersonGenerator {
 
-    private Validator validator = new Validator();
+    @Autowired
+    private Validator validator;
 
     public ResponseEntity generatePersons(String countryCode, int numberOfPeople) throws RandomDataException {
         if (numberOfPeople < 1 || numberOfPeople > 100) {

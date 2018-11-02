@@ -1,22 +1,20 @@
 package com.random.people.validator;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Slf4j
 public class Validator {
 
-    public void validateCountryCode(String countryCode){
-        List<String> supportedCountries = new ArrayList<>();
-        supportedCountries.add("sr");
-        supportedCountries.add("dk");
-        supportedCountries.add("us");
-        supportedCountries.add("es");
+    @Value("${countryCodes}")
+    private String[] supportedCountries;
 
-        if ( supportedCountries.stream().noneMatch(s -> s.equalsIgnoreCase(countryCode)) ){
+    public void validateCountryCode(String countryCode){
+
+        if ( Arrays.stream(supportedCountries).noneMatch(s -> s.equalsIgnoreCase(countryCode)) ){
             String message = "Country code:'"+countryCode.toUpperCase() + "' is not supported.";
             log.info(message);
             throw new InvalidParameterException(message);
